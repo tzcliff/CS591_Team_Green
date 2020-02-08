@@ -33,14 +33,15 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginTop="32dp"
+        android:onClick="buttonHelper"
         android:text="Generate ten Problems "
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/txtYourAns"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="93dp"
+        android:layout_height="30dp"
         android:layout_marginStart="32dp"
         android:layout_marginTop="32dp"
         android:text="Your Answer:"
@@ -49,8 +50,8 @@
 
     <EditText
         android:id="@+id/editAns"
-        android:layout_width="102dp"
-        android:layout_height="26dp"
+        android:layout_width="130dp"
+        android:layout_height="42dp"
         android:layout_marginStart="36dp"
         android:layout_marginTop="32dp"
         android:ems="10"
@@ -62,8 +63,9 @@
         android:id="@+id/btnSubmit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="24dp"
+        android:onClick="buttonHelper"
         android:text="Submit"
         app:layout_constraintStart_toEndOf="@+id/editAns"
         app:layout_constraintTop_toBottomOf="@+id/txtnum2" />

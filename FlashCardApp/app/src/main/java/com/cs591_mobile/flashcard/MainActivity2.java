@@ -19,7 +19,7 @@ public class MainActivity2 extends AppCompatActivity{
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_main_2);
 
         txtnum1 = (TextView)findViewById(R.id.txtnum1);
         txtnum2 = (TextView)findViewById(R.id.txtnum2);
@@ -42,8 +42,8 @@ public class MainActivity2 extends AppCompatActivity{
             int2 = (int)(Math.random() * 100 + 1);
         }
 
-        txtnum1.setText(int1);
-        txtnum2.setText("÷ " + int2);
+        txtnum1.setText(String.valueOf(int1));
+        txtnum2.setText("÷ " + String.valueOf(int2));
         correctResult = int1 / int2;
     }
     public void buttonHelper(View view) {

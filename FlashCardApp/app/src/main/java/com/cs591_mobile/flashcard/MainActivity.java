@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
         txtPass = (TextView)findViewById(R.id.editPass);
         btnSubmit = (Button)findViewById(R.id.btnSubmit);
 
-        userList.add(new User("Alex","122334"));
+        userList.add(new User("a","1"));
 
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -43,11 +43,14 @@ public class MainActivity extends AppCompatActivity {
                 for( int i = 0; i < userList.size(); i ++) {
                     if (userList.get(i).isValid(editUser.getText().toString(),editPass.getText().toString())) {
                         Intent second = new Intent(MainActivity.this, MainActivity2.class);
-                        startActivity(second);
+                        MainActivity.this.startActivity(second);
+                    }
+                    else{
+                        Toast.makeText(getApplicationContext(),"Wrong password or login",Toast.LENGTH_LONG).show();
+
+                    }
                 }
 
-                }
-                Toast.makeText(getApplicationContext(),"Wrong password or login",Toast.LENGTH_LONG).show();
             }
         });
     }
