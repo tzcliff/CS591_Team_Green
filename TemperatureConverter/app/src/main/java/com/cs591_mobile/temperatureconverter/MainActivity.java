@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
         valueText_fahrenheit.setText(String.valueOf((int)Math.round(value_fahrenheit))+" F");
 
 
-        txt_message.setText("It's cold!!!");
+        updateMessageText();
 
         seekBar_fahrenheit.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener(){
             @Override
@@ -102,10 +102,10 @@ public class MainActivity extends AppCompatActivity {
     }
     public void updateMessageText(){
         if(value_celsius < 12){
-            txt_message.setText("It's cold!!!");
+            txt_message.setText(R.string.cold_msg);
         }
         else{
-            txt_message.setText("It's not cold!!!");
+            txt_message.setText(R.string.not_cold_msg);
         }
     }
 }
