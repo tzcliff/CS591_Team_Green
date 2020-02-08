@@ -10,7 +10,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
-public class MainActivity2 extends AppCompatActivity{
+public class FlashCard extends AppCompatActivity{
 
     private TextView txtnum1, txtnum2, txtYourAns, txtInteraction;
     private EditText editAns;
