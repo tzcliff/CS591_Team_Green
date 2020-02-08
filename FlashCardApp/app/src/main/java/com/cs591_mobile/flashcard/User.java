@@ -13,4 +13,9 @@ public class User {
     public boolean isValid(String username, String password) {
         return this.password.equals(password) && this.username.equals(username);
     }
+
+    public String getUsername() {
+        return username;
+    }
+
 }

@@ -40,9 +40,10 @@ public class MainActivity extends AppCompatActivity {
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                for( int i = 0; i < userList.size(); i ++) {
+                for(int i = 0; i < userList.size(); i ++) {
                     if (userList.get(i).isValid(editUser.getText().toString(),editPass.getText().toString())) {
-                        Intent second = new Intent(MainActivity.this, MainActivity2.class);
+                        Intent second = new Intent(MainActivity.this, FlashCard.class);
+                        Toast.makeText(getApplicationContext(),"Welcome " + userList.get(i).getUsername(),Toast.LENGTH_LONG).show();
                         MainActivity.this.startActivity(second);
                     }
                     else{
