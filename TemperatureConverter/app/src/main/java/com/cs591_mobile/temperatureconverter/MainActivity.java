@@ -17,9 +17,11 @@ public class MainActivity extends AppCompatActivity {
     private SeekBar seekBar_fahrenheit;
     private SeekBar seekBar_celsius;
 
-    private Double value_fahrenheit;
-    private Double value_celsius;
+    private Double value_fahrenheit = 32.0;
+    private Double value_celsius = 0.0;
     private TempConverter tempConverter;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,12 +35,20 @@ public class MainActivity extends AppCompatActivity {
         seekBar_fahrenheit = (SeekBar) findViewById(R.id.seekBar_fahrenheit);
         seekBar_celsius = (SeekBar) findViewById(R.id.seekBar_celsius);
 
+        seekBar_celsius.setProgress((int)Math.round(value_celsius));
+        valueText_celsius.setText(String.valueOf((int)Math.round(value_celsius)) + " C");
+        seekBar_fahrenheit.setProgress((int)Math.round(value_fahrenheit));
+        valueText_fahrenheit.setText(String.valueOf((int)Math.round(value_fahrenheit))+" F");
+
+
+        txt_message.setText("It's cold!!!");
 
         seekBar_fahrenheit.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener(){
             @Override
             public void onProgressChanged(SeekBar seekBar, int fahrenheit, boolean b) {
                 valueText_fahrenheit.setText(String.valueOf(fahrenheit)+" F");
-                value_celsius = tempConverter.fToC(Double.valueOf(String.valueOf(fahrenheit)));
+                value_fahrenheit =  Double.valueOf(String.valueOf(fahrenheit));
+                value_celsius = tempConverter.fToC(value_fahrenheit);
                 if(value_celsius > 0){
                     seekBar_celsius.setProgress((int)Math.round(value_celsius));
                 }
@@ -46,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
                     seekBar_celsius.setProgress(0);
                     valueText_celsius.setText(String.valueOf((int)Math.round(value_celsius)) + " C");
                 }
+                updateMessageText();
             }
 
             @Override
@@ -63,7 +74,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onProgressChanged(SeekBar seekBar, int celsius, boolean b) {
                 valueText_celsius.setText(String.valueOf(celsius)+" C");
-                value_fahrenheit = tempConverter.cToF(Double.valueOf(String.valueOf(celsius)));
+                value_celsius = Double.valueOf(String.valueOf(celsius));
+                value_fahrenheit = tempConverter.cToF(value_celsius);
                 if(value_fahrenheit < 100){
                     seekBar_fahrenheit.setProgress((int)Math.round(value_fahrenheit));
                 }
@@ -71,6 +83,7 @@ public class MainActivity extends AppCompatActivity {
                     seekBar_fahrenheit.setProgress(100);
                     valueText_fahrenheit.setText(String.valueOf((int)Math.round(value_fahrenheit))+" F");
                 }
+                updateMessageText();
             }
 
             @Override
@@ -86,5 +99,13 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+    }
+    public void updateMessageText(){
+        if(value_celsius < 12){
+            txt_message.setText("It's cold!!!");
+        }
+        else{
+            txt_message.setText("It's not cold!!!");
+        }
     }
 }
