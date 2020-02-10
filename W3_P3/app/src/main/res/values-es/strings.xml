@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="cold_msg">hace frío!!!</string>
+    <string name="not_cold_msg">no hace frío</string>
+</resources>
