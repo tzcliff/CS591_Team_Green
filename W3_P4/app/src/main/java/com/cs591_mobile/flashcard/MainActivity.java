@@ -35,7 +35,10 @@ public class MainActivity extends AppCompatActivity {
         txtPass = (TextView)findViewById(R.id.editPass);
         btnSubmit = (Button)findViewById(R.id.btnSubmit);
 
+
         userList.add(new User("a","1"));
+        editUser.setText("a");
+        editPass.setText("1");
 
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override

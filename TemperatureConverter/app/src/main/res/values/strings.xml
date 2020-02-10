@@ -1,6 +1,0 @@
-<resources>
-    <string name="app_name">TemperatureConverter</string>
-    <string name="cold_msg">It\'s cold!!!!</string>>
-    <string name="not_cold_msg">It\'s not cold!!!!</string>>
-
-</resources>
