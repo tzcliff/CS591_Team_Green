@@ -1,16 +1,15 @@
 package com.example.calories;
 
 import androidx.appcompat.app.AppCompatActivity;
+import android.view.View;
 import android.os.Bundle;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
-import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.*;
 
-public class MainActivity extends AppCompatActivity implements OnCheckedChangeListener {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener{
     private TextView txtCal;
-    private CheckBox chkBurger, chkSandwich, chkChicken, chkFries, chkCola;
-    private Integer totalCal;
+    private Button btnSubmit;
+    private EditText editBurger, editSandwich, editChicken, editFries, editCola;
+    private Integer totalCal, numBurger, numSandwich, numChicken, numFries, numCola;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,45 +20,35 @@ public class MainActivity extends AppCompatActivity implements OnCheckedChangeLi
         txtCal = findViewById(R.id.txtCal);
         txtCal.setText(String.valueOf(totalCal));
 
-        chkBurger = findViewById(R.id.chkBurger);
-        chkSandwich = findViewById(R.id.chkSandwich);
-        chkChicken = findViewById(R.id.chkChicken);
-        chkFries = findViewById(R.id.chkFries);
-        chkCola = findViewById(R.id.chkCola);
+        numBurger = 0;
+        numSandwich = 0;
+        numChicken = 0;
+        numFries = 0;
+        numCola = 0;
 
-        chkBurger.setOnCheckedChangeListener(this);
-        chkSandwich.setOnCheckedChangeListener(this);
-        chkChicken.setOnCheckedChangeListener(this);
-        chkFries.setOnCheckedChangeListener(this);
-        chkCola.setOnCheckedChangeListener(this);
+        editBurger = findViewById(R.id.editBurger);
+        editSandwich = findViewById(R.id.editSandwich);
+        editChicken = findViewById(R.id.editChicken);
+        editFries = findViewById(R.id.editFries);
+        editCola = findViewById(R.id.editCola);
+
+        btnSubmit = findViewById(R.id.btnSubmit);
+        btnSubmit.setOnClickListener(this);
     }
 
     @Override
-    public void onCheckedChanged(CompoundButton checkBox, boolean checked) {
-        switch(checkBox.getId()) {
-            case R.id.chkBurger:
-                if (checked) totalCal += 1000;
-                else totalCal -= 1000;
-                break;
-            case R.id.chkSandwich:
-                if (checked) totalCal += 600;
-                else totalCal -= 600;
-                break;
-            case R.id.chkChicken:
-                if (checked) totalCal += 700;
-                else totalCal -= 700;
-                break;
-            case R.id.chkFries:
-                if (checked) totalCal += 400;
-                else totalCal -= 400;
-                break;
-            case R.id.chkCola:
-                if (checked) totalCal += 300;
-                else totalCal -= 300;
-                break;
-            default:
-                break;
-        }
+    public void onClick(View v) {
+        numBurger = helper(editBurger);
+        numSandwich = helper(editSandwich);
+        numChicken = helper(editChicken);
+        numFries = helper(editFries);
+        numCola = helper(editCola);
+        totalCal = 1000 * numBurger + 600 * numSandwich + 700 * numChicken + 400 * numFries + 300 * numCola;
         txtCal.setText(String.valueOf(totalCal));
+    }
+
+    public int helper(EditText edit) {
+        if (edit.getText().toString().equals("")) return 0;
+        return Integer.parseInt(edit.getText().toString());
     }
 }
