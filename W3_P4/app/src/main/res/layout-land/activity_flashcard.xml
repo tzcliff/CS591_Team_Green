@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".FlashCard">
+
+
+        <TextView
+            android:id="@+id/txtnum1"
+            android:layout_width="99dp"
+            android:layout_height="79dp"
+            android:layout_marginStart="48dp"
+            android:text="Number 1"
+            app:layout_constraintBaseline_toBaselineOf="@+id/txtnum2"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/txtnum2"
+            android:layout_width="201dp"
+            android:layout_height="75dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="32dp"
+            android:text="Divided by Number 2"
+            app:layout_constraintStart_toEndOf="@+id/txtnum1"
+            app:layout_constraintTop_toBottomOf="@+id/btnGenerate" />
+
+        <Button
+            android:id="@+id/btnGenerate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:onClick="buttonHelper"
+            android:text="Generate ten Problems "
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/txtYourAns"
+            android:layout_width="93dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="48dp"
+            android:layout_marginTop="32dp"
+            android:text="Your Answer:"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txtnum1" />
+
+        <EditText
+            android:id="@+id/editAns"
+            android:layout_width="130dp"
+            android:layout_height="42dp"
+            android:layout_marginStart="92dp"
+            android:layout_marginTop="24dp"
+            android:ems="10"
+            android:inputType="number"
+            app:layout_constraintStart_toEndOf="@+id/txtYourAns"
+            app:layout_constraintTop_toBottomOf="@+id/txtnum2" />
+
+        <Button
+            android:id="@+id/btnSubmit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="28dp"
+            android:layout_marginTop="24dp"
+            android:onClick="buttonHelper"
+            android:text="Submit"
+            app:layout_constraintStart_toEndOf="@+id/editAns"
+            app:layout_constraintTop_toBottomOf="@+id/txtnum2" />
+
+        <TextView
+            android:id="@+id/txtInteraction"
+            android:layout_width="218dp"
+            android:layout_height="19dp"
+            android:layout_marginStart="256dp"
+            android:layout_marginTop="28dp"
+            android:text="User Interaction Messages"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txtYourAns" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/txtnum"
+        android:layout_width="match_parent"
+        android:layout_height="79dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="32dp"
+        android:text="Number 1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnGenerate" />
+
+    <TextView
+        android:id="@+id/txtnum3"
+        android:layout_width="match_parent"
+        android:layout_height="75dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="32dp"
+        android:text="Divided by Number 2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtnum1" />
+
+    <Button
+        android:id="@+id/btnGenerate2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="32dp"
+        android:onClick="buttonHelper"
+        android:text="Generate ten Problems "
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/txtYourAns2"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="32dp"
+        android:text="Your Answer:"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtnum2" />
+
+    <EditText
+        android:id="@+id/editAns2"
+        android:layout_width="match_parent"
+        android:layout_height="42dp"
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="32dp"
+        android:ems="10"
+        android:inputType="number"
+        app:layout_constraintStart_toEndOf="@+id/txtYourAns"
+        app:layout_constraintTop_toBottomOf="@+id/txtnum2" />
+
+    <Button
+        android:id="@+id/btnSubmit2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="24dp"
+        android:onClick="buttonHelper"
+        android:text="Submit"
+        app:layout_constraintStart_toEndOf="@+id/editAns"
+        app:layout_constraintTop_toBottomOf="@+id/txtnum2" />
+
+    <TextView
+        android:id="@+id/txtInteraction2"
+        android:layout_width="match_parent"
+        android:layout_height="19dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="32dp"
+        android:text="User Interaction Messages"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtYourAns" />
+</LinearLayout>
