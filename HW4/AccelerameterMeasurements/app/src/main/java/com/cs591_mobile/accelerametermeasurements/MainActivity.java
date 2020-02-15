@@ -10,34 +10,36 @@ import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.w3c.dom.Text;
-
 public class MainActivity extends AppCompatActivity {
 
-    private static Integer sensitivity = 80;
+    private static Integer sensitivity = 15;
     private final String TAG = "Acceleration";
     private SeekBar seekBarSensitivity;
-    private TextView labelSensitivity
+    private TextView labelSensitivity;
+    private WebView webView;
 
     private SensorEventListener sensorEventListener = new SensorEventListener() {
         @Override
         public void onSensorChanged(SensorEvent sensorEvent) {
-            double x = sensorEvent.values[0];
-            double y = sensorEvent.values[1];
-            double z = sensorEvent.values[2];
+            double x = Math.abs(sensorEvent.values[0]);
+            double y = Math.abs(sensorEvent.values[1]);
+            double z = Math.abs(sensorEvent.values[2]);
 
-            double currentAcceleration = Math.sqrt((x * x + y * y + z * z));
-            if(currentAcceleration > sensitivity){
-                Toast.makeText(MainActivity.this, "Moving Fast!!!",
-                        Toast.LENGTH_LONG).show();
+
+            if(x > sensitivity || y > sensitivity || z > sensitivity){
+
+                accelerationThreshold((int)x, (int)y, (int)z);
                 Log.e("Acceleration","delta x = " + x);
                 Log.e("Acceleration","delta y = " + y);
                 Log.e("Acceleration","delta z = " + z);
-                Log.e("Acceleration","Acceleration = " + currentAcceleration);
+                if(x + y + z >= 2.5 * sensitivity){
+                    webView.loadUrl("https://jumpingjaxfitness.files.wordpress.com/2010/07/dizziness.jpg");
+                }
             }
         }
         @Override
@@ -49,15 +51,22 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        SeekBar seekBarSensitivity = findViewById(R.id.seekBarSensitivity);
-        TextView labelSensitivity = findViewById(R.id.labelSensitivity);
-        WebView webView = findViewById(R.id.webView);
+        seekBarSensitivity = findViewById(R.id.seekBarSensitivity);
+        labelSensitivity = findViewById(R.id.labelSensitivity);
+        webView = findViewById(R.id.webView);
 
         seekBarSensitivity.setMax(sensitivity);
         seekBarSensitivity.setProgress(sensitivity);
         labelSensitivity.setText(sensitivity.toString());
+        webView.getSettings().setJavaScriptEnabled(true);
 
-        webView .loadUrl("http://www.google.com");
+        webView.setWebViewClient(new WebViewClient() {
+            public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
+                Toast.makeText(MainActivity.this, "Oh no! " + description, Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        webView.loadUrl("http://developer.android.com/");
 
 
 
@@ -117,6 +126,25 @@ public class MainActivity extends AppCompatActivity {
 
         sensorManager.unregisterListener(sensorEventListener,
                 sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER));
+    }
+
+    public void accelerationThreshold(int x, int y, int z){
+        String msg = "";
+        if (x > y && x > z) {
+            msg = "Moving Fast on X!!!";
+            webView.loadUrl("https://www.ecosia.org/");
+        }
+        else if (y > x && y > z) {
+            msg = "Moving Fast on Y!!!";
+            webView.loadUrl("https://www.dogpile.com/");
+        }
+        else if(z > y && z > x){
+            msg = "Moving Fast on Z!!!";
+            webView.loadUrl("https://buzzsumo.com/");
+        }
+
+        Toast.makeText(MainActivity.this, msg,
+                Toast.LENGTH_LONG).show();
     }
 
 
