@@ -100,51 +100,51 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
     @Override
     public boolean onScroll(MotionEvent e1, MotionEvent e2,
                             float distanceX, float distanceY) {
-        try {
-            if (textBox.getText().toString().equals("")) {
-                if (distanceY < 0) {
-                    double currentVal = 0.0;
-                    currentVal = currentVal + 0.05;
-                    String result = String.format("%.2f", currentVal);
-                    textBox.setText(result);
-
-                }
-                else {
-                    double currentVal = 0.0;
-                    currentVal = currentVal - 0.05;
-                    String result = String.format("%.2f", currentVal);
-                    textBox.setText(result);
-
-                }
-
-            }
-            else {
-                if (distanceY < 0) {
-                    double currentVal = Double.valueOf(textBox.getText().toString());
-                    currentVal = currentVal + 0.05;
-                    String result = String.format("%.2f", currentVal);
-                    textBox.setText(result);
-
-                }
-                else {
-                    double currentVal = Double.valueOf(textBox.getText().toString());
-                    currentVal = currentVal - 0.05;
-                    String result = String.format("%.2f", currentVal);
-                    textBox.setText(result);
-
-                }
-            }
-
-        }
-        catch(Exception ex) {
-            Context context = getApplicationContext();
-            CharSequence text = "onFling Exception!" + ex;
-            int duration = Toast.LENGTH_SHORT;
-
-            Toast toast = Toast.makeText(context, text, duration);
-            toast.show();
-            System.out.println("onFling exception: " + ex);
-        }
+//        try {
+//            if (textBox.getText().toString().equals("")) {
+//                if (distanceY < 0) {
+//                    double currentVal = 0.0;
+//                    currentVal = currentVal + 0.05;
+//                    String result = String.format("%.2f", currentVal);
+//                    textBox.setText(result);
+//
+//                }
+//                else {
+//                    double currentVal = 0.0;
+//                    currentVal = currentVal - 0.05;
+//                    String result = String.format("%.2f", currentVal);
+//                    textBox.setText(result);
+//
+//                }
+//
+//            }
+//            else {
+//                if (distanceY < 0) {
+//                    double currentVal = Double.valueOf(textBox.getText().toString());
+//                    currentVal = currentVal + 0.05;
+//                    String result = String.format("%.2f", currentVal);
+//                    textBox.setText(result);
+//
+//                }
+//                else {
+//                    double currentVal = Double.valueOf(textBox.getText().toString());
+//                    currentVal = currentVal - 0.05;
+//                    String result = String.format("%.2f", currentVal);
+//                    textBox.setText(result);
+//
+//                }
+//            }
+//
+//        }
+//        catch(Exception ex) {
+//            Context context = getApplicationContext();
+//            CharSequence text = "onFling Exception!" + ex;
+//            int duration = Toast.LENGTH_SHORT;
+//
+//            Toast toast = Toast.makeText(context, text, duration);
+//            toast.show();
+//            System.out.println("onFling exception: " + ex);
+//        }
 
         return true;
     }
@@ -157,88 +157,92 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
     @Override
     public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
         try {
-            if (textBox.getText().toString().equals("")) {
-                if (velocityY < 0) {
-                    double currentVal = 0.0;
-                    currentVal = currentVal + 1.0;
-                    String result = String.format("%.2f", currentVal);
-                    textBox.setText(result);
-                }
-                else {
-                    double currentVal = 0.0;
-                    currentVal = currentVal - 1.0;
-                    String result = String.format("%.2f", currentVal);
-                    textBox.setText(result);
-                }
-            }
-            else {
-                if (velocityY < 0) {
-                    double currentVal = Double.valueOf(textBox.getText().toString());
-                    currentVal = currentVal + 1.0;
-                    String result = String.format("%.2f", currentVal);
-                    textBox.setText(result);
-                }
-                else {
-                    double currentVal = Double.valueOf(textBox.getText().toString());
-                    currentVal = currentVal - 1.0;
-                    String result = String.format("%.2f", currentVal);
-                    textBox.setText(result);
-                }
-
-            }
 //            if (textBox.getText().toString().equals("")) {
-//                if (velocityY < -1000) {
+//                if (velocityY < 0) {
 //                    double currentVal = 0.0;
 //                    currentVal = currentVal + 1.0;
 //                    String result = String.format("%.2f", currentVal);
 //                    textBox.setText(result);
 //                }
-//                else if (velocityY < 0 && velocityY > -1000){
+//                else {
 //                    double currentVal = 0.0;
-//                    currentVal = currentVal + 0.05;
+//                    currentVal = currentVal - 1.0;
 //                    String result = String.format("%.2f", currentVal);
 //                    textBox.setText(result);
 //                }
-//                else if (velocityY >= 0 && velocityY < 1000) {
-//                    double currentVal = 0.0;
-//                    currentVal = currentVal - 0.05;
+//            }
+//            else {
+//                if (velocityY < 0) {
+//                    double currentVal = Double.valueOf(textBox.getText().toString());
+//                    currentVal = currentVal + 1.0;
 //                    String result = String.format("%.2f", currentVal);
 //                    textBox.setText(result);
 //                }
 //                else {
-//                    double currentVal = 0.0;
+//                    double currentVal = Double.valueOf(textBox.getText().toString());
 //                    currentVal = currentVal - 1.0;
 //                    String result = String.format("%.2f", currentVal);
 //                    textBox.setText(result);
 //                }
 //
 //            }
-//            else {
-//                if (velocityY < -1000) {
-//                    double currentVal = Double.valueOf(textBox.getText().toString());
-//                    currentVal = currentVal + 1.0;
-//                    String result = String.format("%.2f", currentVal);
-//                    textBox.setText(result);
-//                }
-//                else if (velocityY < 0 && velocityY > -1000){
-//                    double currentVal = Double.valueOf(textBox.getText().toString());
-//                    currentVal = currentVal + 0.05;
-//                    String result = String.format("%.2f", currentVal);
-//                    textBox.setText(result);
-//                }
-//                else if (velocityY >= 0 && velocityY < 1000) {
-//                    double currentVal = Double.valueOf(textBox.getText().toString());
-//                    currentVal = currentVal - 0.05;
-//                    String result = String.format("%.2f", currentVal);
-//                    textBox.setText(result);
-//                }
-//                else {
-//                    double currentVal = Double.valueOf(textBox.getText().toString());
-//                    currentVal = currentVal - 1.0;
-//                    String result = String.format("%.2f", currentVal);
-//                    textBox.setText(result);
-//                }
-//            }
+
+            // Approach 2:
+
+
+            if (textBox.getText().toString().equals("")) {
+                if (velocityY < -1000) {
+                    double currentVal = 0.0;
+                    currentVal = currentVal + 1.0;
+                    String result = String.format("%.2f", currentVal);
+                    textBox.setText(result);
+                }
+                else if (velocityY < 0 && velocityY > -1000){
+                    double currentVal = 0.0;
+                    currentVal = currentVal + 0.05;
+                    String result = String.format("%.2f", currentVal);
+                    textBox.setText(result);
+                }
+                else if (velocityY >= 0 && velocityY < 1000) {
+                    double currentVal = 0.0;
+                    currentVal = currentVal - 0.05;
+                    String result = String.format("%.2f", currentVal);
+                    textBox.setText(result);
+                }
+                else {
+                    double currentVal = 0.0;
+                    currentVal = currentVal - 1.0;
+                    String result = String.format("%.2f", currentVal);
+                    textBox.setText(result);
+                }
+
+            }
+            else {
+                if (velocityY < -1000) {
+                    double currentVal = Double.valueOf(textBox.getText().toString());
+                    currentVal = currentVal + 1.0;
+                    String result = String.format("%.2f", currentVal);
+                    textBox.setText(result);
+                }
+                else if (velocityY < 0 && velocityY > -1000){
+                    double currentVal = Double.valueOf(textBox.getText().toString());
+                    currentVal = currentVal + 0.05;
+                    String result = String.format("%.2f", currentVal);
+                    textBox.setText(result);
+                }
+                else if (velocityY >= 0 && velocityY < 1000) {
+                    double currentVal = Double.valueOf(textBox.getText().toString());
+                    currentVal = currentVal - 0.05;
+                    String result = String.format("%.2f", currentVal);
+                    textBox.setText(result);
+                }
+                else {
+                    double currentVal = Double.valueOf(textBox.getText().toString());
+                    currentVal = currentVal - 1.0;
+                    String result = String.format("%.2f", currentVal);
+                    textBox.setText(result);
+                }
+            }
 
         }
         catch(Exception ex) {
