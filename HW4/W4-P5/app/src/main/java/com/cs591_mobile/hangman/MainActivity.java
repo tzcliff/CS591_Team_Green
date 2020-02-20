@@ -5,8 +5,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Dialog;
 import android.content.DialogInterface;
+
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
+
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
@@ -16,6 +18,7 @@ import android.widget.TextView;
 import android.widget.ImageView;
 
 import com.cs591_mobile.hangman.models.Game;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 
@@ -34,19 +37,31 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        currentImage = 0;
-        image = (ImageView) findViewById(R.id.imgHang);
 
-        game = new Game();
-        int wordLength = game.getWord().length();
         textViewGoal = findViewById(R.id.txtGoal);
-        guessWord ="";
-        for(int i = 0; i < wordLength; i++){
-            guessWord += "_";
-        }
-        updateTextField(textViewGoal);
-        Log.i("Kobe", game.getWord());
         textViewGoal.setGravity(Gravity.CENTER);
+
+        if (savedInstanceState == null) {
+            currentImage = 0;
+            image = (ImageView) findViewById(R.id.imgHang);
+            game = new Game();
+            int wordLength = game.getWord().length();
+            guessWord ="";
+            for(int i = 0; i < wordLength; i++){
+                guessWord += "_";
+            }
+            updateTextField(textViewGoal);
+            Log.i("Kobe", game.getWord());
+
+        } else {
+            guessWord = savedInstanceState.getString("guessWord");
+            String StringGame = savedInstanceState.getString("game");
+            game = new Gson().fromJson(StringGame, Game.class);
+            updateTextField(textViewGoal);
+            Log.i("Jiang", game.getWord());
+        }
+
+
 
     }
 
@@ -99,6 +114,15 @@ public class MainActivity extends AppCompatActivity {
         Log.i("t", guessWord);
         textView.setText(temp);
         textView.setGravity(Gravity.CENTER);
+    }
+
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        outState.putString("guessWord", guessWord);
+        outState.putString("game", new Gson().toJson(game));
+
+        super.onSaveInstanceState(outState);
     }
 
     public void updateImage(ImageView image) {
