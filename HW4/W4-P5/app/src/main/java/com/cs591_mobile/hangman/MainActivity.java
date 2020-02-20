@@ -1,7 +1,10 @@
 package com.cs591_mobile.hangman;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -21,12 +24,10 @@ public class MainActivity extends AppCompatActivity {
 
     Game game;
     String guessWord = "";
-
     ImageView image;
-
     TextView textViewGoal;
-
     int currentImage;
+    int lives = 6;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,9 +53,9 @@ public class MainActivity extends AppCompatActivity {
     public void click(View view){
         Button button = (Button)view;
         String str = button.getText().toString();
-
         Log.i("T", str);
         ArrayList<Integer> indices = game.guess(str);
+
         if(indices.size() != 0){
             for(Integer i : indices){
                 guessWord = guessWord.substring(0, i) + game.getWord().charAt(i) + guessWord.substring(i + 1);
@@ -63,7 +64,30 @@ public class MainActivity extends AppCompatActivity {
             }
         }
         else{
+            lives--;
             updateImage(image);
+        }
+        GameResult gameResult = checkStatus();
+        if(gameResult == GameResult.LOSE){
+            showDialog("You lose!!");
+        }
+        else if(gameResult == GameResult.WIN){
+            showDialog("You win!!");
+
+        }
+
+    }
+    public GameResult checkStatus(){
+        if(lives <= 0){
+            return GameResult.LOSE;
+        }
+        else{
+            if(guessWord.equals(game.getWord())){
+                return GameResult.WIN;
+            }
+            else{
+                return GameResult.PLAYING;
+            }
         }
     }
 
@@ -109,7 +133,7 @@ public class MainActivity extends AppCompatActivity {
     public void newGame() {
         currentImage = 0; // reset to the original hangman image
         image.setImageResource(R.drawable.hangman0);
-
+        lives = 6;
         game = new Game();
         int wordLength = game.getWord().length();
         textViewGoal = findViewById(R.id.txtGoal);
@@ -121,7 +145,21 @@ public class MainActivity extends AppCompatActivity {
         Log.i("Kobe", game.getWord());
         textViewGoal.setGravity(Gravity.CENTER);
 
-
     }
+
+    public void showDialog(String msg){
+        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+        builder.setMessage(msg)
+                .setPositiveButton("Restart", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        newGame();
+                    }
+                });
+
+        // Create the AlertDialog object and return it
+        Dialog dialog = builder.create();
+        dialog.show();
+    }
+
 
 }
