@@ -7,7 +7,7 @@ public class WordGenerator {
     private String[] hints = {"A brand of car", "A sweet food", "A farm animal", "Somewhere you live", "It floats", "It flies", "A fruit"};
 
 
-    public static void main(String argsp[]) {
+    public static void main(String args[]) {
         WordGenerator a = new WordGenerator();
         int num = a.chooseWord();
         System.out.println("chose" + num + " which corresponds to: " + a.words[num] + " which has a hint of: " + a.hints[num]);
