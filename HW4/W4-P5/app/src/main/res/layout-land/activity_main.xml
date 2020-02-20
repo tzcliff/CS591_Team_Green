@@ -274,7 +274,7 @@
         android:layout_marginTop="32dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/Hangman-0" />
+        app:srcCompat="@drawable/hangman-0" />
 
     <TextView
         android:id="@+id/txtGoal"
