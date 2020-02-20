@@ -98,9 +98,10 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case 6:
                 image.setImageResource(R.drawable.hangman6);
+                // call game over popup because you have reached the limit of incorrect answers
                 break;
             default:
-                image.setImageResource(R.drawable.hangman6);
+                image.setImageResource(R.drawable.hangman0);
                 break;
         }
     }
