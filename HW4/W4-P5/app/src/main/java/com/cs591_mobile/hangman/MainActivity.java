@@ -105,4 +105,22 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    public void newGame() {
+        currentImage = 0; // reset to the original hangman image
+        image.setImageResource(R.drawable.hangman0);
+
+        game = new Game();
+        int wordLength = game.getWord().length();
+        textViewGoal = findViewById(R.id.txtGoal);
+        guessWord ="";
+        for(int i = 0; i < wordLength; i++){
+            guessWord += "_";
+        }
+        updateTextField(textViewGoal);
+        Log.i("Kobe", game.getWord());
+        textViewGoal.setGravity(Gravity.CENTER);
+
+
+    }
+
 }
