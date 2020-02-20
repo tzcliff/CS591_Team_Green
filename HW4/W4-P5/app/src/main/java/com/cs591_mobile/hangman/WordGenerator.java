@@ -3,8 +3,8 @@ package com.cs591_mobile.hangman;
 import java.util.Random;
 
 public class WordGenerator {
-    private String[] words = {"Lamborghini", "Donut", "Horse", "Apartment", "Buoy", "Helicopter", "Blueberry"};
-    private String[] hints = {"A brand of car", "A sweet food", "A farm animal", "Somewhere you live", "It floats", "It flies", "A fruit"};
+    public String[] words = {"Lamborghini", "Donut", "Horse", "Apartment", "Buoy", "Helicopter", "Blueberry"};
+    public String[] hints = {"A brand of car", "A sweet food", "A farm animal", "Somewhere you live", "It floats", "It flies", "A fruit"};
 
 
     public static void main(String args[]) {
@@ -18,6 +18,8 @@ public class WordGenerator {
         Random rand = new Random();
         return rand.nextInt(words.length - 1); // choose a random index of the words array
     }
+
+
 
 }
 
