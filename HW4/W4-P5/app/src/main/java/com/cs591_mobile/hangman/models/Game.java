@@ -74,5 +74,17 @@ public class Game {
             return false;
 
     }
+    public int calculateTotalPoints(){
+        int result = 0;
+        for(int i = 0; i < word.length(); i++){
+            if(checkVowel(String.valueOf(word.charAt(i)))){
+                result += 5;
+            }
+            else{
+                result += 2;
+            }
+        }
+        return result;
+    }
 
 }
