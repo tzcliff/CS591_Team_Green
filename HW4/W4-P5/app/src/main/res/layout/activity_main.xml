@@ -328,23 +328,4 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/btnHint"
-        android:layout_width="84dp"
-        android:layout_height="40dp"
-        android:layout_marginStart="41dp"
-        android:layout_marginTop="660dp"
-        android:text="Hint"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/txtHint"
-        android:layout_width="236dp"
-        android:layout_height="40dp"
-        android:layout_marginStart="135dp"
-        android:layout_marginTop="660dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>

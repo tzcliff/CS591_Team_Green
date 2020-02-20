@@ -40,10 +40,11 @@ public class MainActivity extends AppCompatActivity {
 
         textViewGoal = findViewById(R.id.txtGoal);
         textViewGoal.setGravity(Gravity.CENTER);
+        image = (ImageView) findViewById(R.id.imgHang);
 
         if (savedInstanceState == null) {
             currentImage = 0;
-            image = (ImageView) findViewById(R.id.imgHang);
+
             game = new Game();
             int wordLength = game.getWord().length();
             guessWord ="";
@@ -57,7 +58,10 @@ public class MainActivity extends AppCompatActivity {
             guessWord = savedInstanceState.getString("guessWord");
             String StringGame = savedInstanceState.getString("game");
             game = new Gson().fromJson(StringGame, Game.class);
+            currentImage = savedInstanceState.getInt("currentImage");
             updateTextField(textViewGoal);
+            updateImage(image);
+            lives = savedInstanceState.getInt("lives");
             Log.i("Jiang", game.getWord());
         }
 
@@ -121,6 +125,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onSaveInstanceState(Bundle outState) {
         outState.putString("guessWord", guessWord);
         outState.putString("game", new Gson().toJson(game));
+        outState.putInt("currentImage", currentImage - 1);
+        outState.putInt("lives", lives);
 
         super.onSaveInstanceState(outState);
     }
