@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.cs591_mobile.hangman.models.Game;
 
@@ -69,9 +70,14 @@ public class MainActivity extends AppCompatActivity {
         }
         GameResult gameResult = checkStatus();
         if(gameResult == GameResult.LOSE){
+
+            Toast toast = Toast.makeText(MainActivity.this, "You have got " + game.getScore() + " out of " + game.calculateTotalPoints() , Toast.LENGTH_LONG);
+            toast.show();
             showDialog("You lose!!");
         }
         else if(gameResult == GameResult.WIN){
+            Toast toast = Toast.makeText(MainActivity.this, "You have got " + game.getScore() + " out of " + game.calculateTotalPoints() , Toast.LENGTH_LONG);
+            toast.show();
             showDialog("You win!!");
 
         }
