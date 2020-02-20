@@ -44,6 +44,7 @@ public class Game {
     }
 
     public ArrayList<Integer> guess(String str){
+
         if(word.contains(str)){
             ArrayList<Integer> indices = new ArrayList<>();
             for(int i = 0; i < word.length(); i++){
