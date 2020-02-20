@@ -48,7 +48,7 @@ public class Game {
         if(word.contains(str)){
             ArrayList<Integer> indices = new ArrayList<>();
             for(int i = 0; i < word.length(); i++){
-                if(String.valueOf(word.charAt(i)) == str){
+                if(String.valueOf(word.charAt(i)).equals(str)){
                     indices.add(i);
                     if(checkVowel(str)){
                         score += 5;
@@ -61,7 +61,7 @@ public class Game {
             return indices;
         }
         else{
-            return null;
+            return new ArrayList<Integer>();
         }
 
     }
