@@ -3,12 +3,16 @@ package com.cs591_mobile.hangman;
 import androidx.appcompat.app.AppCompatActivity;
 
 
+import android.content.res.Resources;
+import android.graphics.drawable.Drawable;
+
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.ImageView;
 
 import com.cs591_mobile.hangman.models.Game;
 import com.google.gson.Gson;
@@ -21,17 +25,24 @@ public class MainActivity extends AppCompatActivity {
     Game game;
     String guessWord = "";
 
+    ImageView image;
+
     TextView textViewGoal;
+
+    int currentImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
         textViewGoal = findViewById(R.id.txtGoal);
         textViewGoal.setGravity(Gravity.CENTER);
 
         if (savedInstanceState == null) {
+            currentImage = 0;
+            image = (ImageView) findViewById(R.id.imgHang);
             game = new Game();
             int wordLength = game.getWord().length();
             guessWord ="";
@@ -67,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }
         else{
-            // todo next pic
+            updateImage(image);
         }
     }
 
@@ -81,6 +92,7 @@ public class MainActivity extends AppCompatActivity {
         textView.setGravity(Gravity.CENTER);
     }
 
+
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         outState.putString("guessWord", guessWord);
@@ -88,4 +100,53 @@ public class MainActivity extends AppCompatActivity {
 
         super.onSaveInstanceState(outState);
     }
+
+    public void updateImage(ImageView image) {
+        currentImage++;
+        switch (currentImage) {
+            case 1:
+                Log.i("Kobe", "image 1");
+                image.setImageResource(R.drawable.hangman1);
+                break;
+            case 2:
+                image.setImageResource(R.drawable.hangman2);
+                break;
+            case 3:
+                image.setImageResource(R.drawable.hangman3);
+                break;
+            case 4:
+                image.setImageResource(R.drawable.hangman4);
+                break;
+            case 5:
+                image.setImageResource(R.drawable.hangman5);
+                break;
+            case 6:
+                image.setImageResource(R.drawable.hangman6);
+                // call game over popup because you have reached the limit of incorrect answers
+                break;
+            default:
+                image.setImageResource(R.drawable.hangman0);
+                break;
+        }
+    }
+
+    public void newGame() {
+        currentImage = 0; // reset to the original hangman image
+        image.setImageResource(R.drawable.hangman0);
+
+        game = new Game();
+        int wordLength = game.getWord().length();
+        textViewGoal = findViewById(R.id.txtGoal);
+        guessWord ="";
+        for(int i = 0; i < wordLength; i++){
+            guessWord += "_";
+        }
+        updateTextField(textViewGoal);
+        Log.i("Kobe", game.getWord());
+        textViewGoal.setGravity(Gravity.CENTER);
+
+
+    }
+
+
 }
