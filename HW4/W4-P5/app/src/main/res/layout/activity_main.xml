@@ -295,7 +295,7 @@
     <ImageView
         android:id="@+id/imgHang"
         android:layout_width="332dp"
-        android:layout_height="272dp"
+        android:layout_height="252dp"
         android:layout_marginStart="39dp"
         android:layout_marginTop="30dp"
         app:layout_constraintStart_toStartOf="parent"
