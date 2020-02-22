@@ -1,12 +1,12 @@
 package com.example.c4_29;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class Activity2 extends AppCompatActivity {
 
@@ -44,7 +44,9 @@ public class Activity2 extends AppCompatActivity {
         rl = findViewById(R.id.rltLayout);
         RLP = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         tv.setLayoutParams(RLP);
-        tv.setGravity(Gravity.CENTER_HORIZONTAL);
+        tv.getLayoutParams().width = ViewGroup.LayoutParams.MATCH_PARENT;
+        tv.getLayoutParams().height = ViewGroup.LayoutParams.MATCH_PARENT;
+        tv.setGravity(Gravity.CENTER);
 
 
         rl.addView(tv);
