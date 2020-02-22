@@ -29,9 +29,11 @@ public class MainActivity extends AppCompatActivity {
     Game game;
     String guessWord = "";
     ImageView image;
-    TextView textViewGoal;
+    TextView textViewGoal, textViewHint;
+    ArrayList<Button> clicked = new ArrayList<>();
     int currentImage;
     int lives = 6;
+    int gotHint = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
 
         textViewGoal = findViewById(R.id.txtGoal);
         textViewGoal.setGravity(Gravity.CENTER);
+        textViewHint = findViewById(R.id.txtHint);
         image = (ImageView) findViewById(R.id.imgHang);
 
         if (savedInstanceState == null) {
@@ -48,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
 
             game = new Game();
             int wordLength = game.getWord().length();
-            guessWord ="";
+            guessWord = "";
             for(int i = 0; i < wordLength; i++){
                 guessWord += "_";
             }
@@ -63,16 +66,32 @@ public class MainActivity extends AppCompatActivity {
             updateTextField(textViewGoal);
             updateImage(image);
             lives = savedInstanceState.getInt("lives");
+            gotHint = savedInstanceState.getInt("gotHint");
             Log.i("Jiang", game.getWord());
+            for (int j = 0; j < savedInstanceState.getInt("clickedNum"); j ++) {
+                int btnId = savedInstanceState.getInt("btn" + j);
+                Button button = findViewById(btnId);
+                button.setVisibility(View.INVISIBLE);
+                clicked.add(button);
+            }
+            Button btnHint = findViewById(R.id.btnHint);
+            if (btnHint != null && gotHint == 1) {
+                btnHint.setVisibility(View.INVISIBLE);
+                textViewHint.setText(game.getHint());
+            }
         }
-
-
-
     }
 
     public void click(View view){
         Button button = (Button)view;
         String str = button.getText().toString();
+        if (str.equals("HINT")) {
+            textViewHint.setText(game.getHint());
+            button.setVisibility(View.INVISIBLE);
+            gotHint = 1;
+            return;
+        }
+
         Log.i("T", str);
         ArrayList<Integer> indices = game.guess(str);
 
@@ -89,7 +108,6 @@ public class MainActivity extends AppCompatActivity {
         }
         GameResult gameResult = checkStatus();
         if(gameResult == GameResult.LOSE){
-
             Toast toast = Toast.makeText(MainActivity.this, "You have got " + game.getScore() + " out of " + game.calculateTotalPoints() , Toast.LENGTH_LONG);
             toast.show();
             showDialog("You lose!!");
@@ -98,10 +116,11 @@ public class MainActivity extends AppCompatActivity {
             Toast toast = Toast.makeText(MainActivity.this, "You have got " + game.getScore() + " out of " + game.calculateTotalPoints() , Toast.LENGTH_LONG);
             toast.show();
             showDialog("You win!!");
-
         }
-
+        button.setVisibility(View.INVISIBLE);
+        clicked.add(button);
     }
+
     public GameResult checkStatus(){
         if(lives <= 0){
             return GameResult.LOSE;
@@ -126,13 +145,17 @@ public class MainActivity extends AppCompatActivity {
         textView.setGravity(Gravity.CENTER);
     }
 
-
     @Override
     protected void onSaveInstanceState(Bundle outState) {
+        for (int i = 0; i < clicked.size(); i ++) {
+            outState.putInt("btn" + i, clicked.get(i).getId());
+        }
         outState.putString("guessWord", guessWord);
         outState.putString("game", new Gson().toJson(game));
         outState.putInt("currentImage", currentImage - 1);
         outState.putInt("lives", lives);
+        outState.putInt("clickedNum", clicked.size());
+        outState.putInt("gotHint", gotHint);
 
         super.onSaveInstanceState(outState);
     }
@@ -170,13 +193,24 @@ public class MainActivity extends AppCompatActivity {
         currentImage = 0; // reset to the original hangman image
         image.setImageResource(R.drawable.hangman0);
         lives = 6;
+        gotHint = 0;
         game = new Game();
         int wordLength = game.getWord().length();
         textViewGoal = findViewById(R.id.txtGoal);
-        guessWord ="";
+        textViewHint = findViewById(R.id.txtHint);
+        textViewHint.setText("");
+        guessWord = "";
         for(int i = 0; i < wordLength; i++){
             guessWord += "_";
         }
+        for(Button button: clicked) {
+            button.setVisibility(View.VISIBLE);
+        }
+        Button btnHint = findViewById(R.id.btnHint);
+        if (btnHint != null) {
+            btnHint.setVisibility(View.VISIBLE);
+        }
+        clicked.clear();
         updateTextField(textViewGoal);
         Log.i("Kobe", game.getWord());
         textViewGoal.setGravity(Gravity.CENTER);
