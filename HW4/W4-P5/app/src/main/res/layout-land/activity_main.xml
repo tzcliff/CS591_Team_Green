@@ -7,6 +7,20 @@
     tools:context=".MainActivity">
 
     <Button
+        android:id="@+id/button_restart2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="300dp"
+        android:layout_marginBottom="16dp"
+        android:onClick="restartClicked"
+        android:text="Restart"
+        app:layout_constraintBottom_toTopOf="@+id/imgHang"
+        app:layout_constraintStart_toEndOf="@+id/txtHint"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.083" />
+
+    <Button
         android:id="@+id/btnZ"
         android:layout_width="40dp"
         android:layout_height="40dp"
@@ -294,8 +308,8 @@
 
     <ImageView
         android:id="@+id/imgHang"
-        android:layout_width="332dp"
-        android:layout_height="252dp"
+        android:layout_width="336dp"
+        android:layout_height="245dp"
         android:layout_marginStart="360dp"
         android:layout_marginTop="16dp"
         app:layout_constraintStart_toStartOf="parent"
@@ -307,7 +321,7 @@
         android:layout_width="332dp"
         android:layout_height="52dp"
         android:layout_marginStart="360dp"
-        android:layout_marginTop="276dp"
+        android:layout_marginTop="264dp"
         android:fontFamily="sans-serif-black"
         android:textSize="36sp"
         android:textStyle="bold"
@@ -341,8 +355,8 @@
 
     <TextView
         android:id="@+id/txtHint"
-        android:layout_width="236dp"
-        android:layout_height="40dp"
+        android:layout_width="123dp"
+        android:layout_height="43dp"
         android:layout_marginStart="112dp"
         android:layout_marginTop="276dp"
         app:layout_constraintStart_toStartOf="parent"
