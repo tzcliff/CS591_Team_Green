@@ -3,7 +3,7 @@ package com.cs591_mobile.hangman;
 import java.util.Random;
 
 public class WordGenerator {
-    public String[] words = {"TERRIER", "DONUT", "HORSE", "HOUSE", "Buoy", "HELICOPTER", "BLUEBERRY"};
+    public String[] words = {"TERRIER", "DONUT", "HORSE", "HOUSE", "BUOY", "HELICOPTER", "BLUEBERRY"};
     public String[] hints = {"A BU mascot", "A sweet food", "A farm animal", "Somewhere you live", "It floats", "It flies", "A fruit"};
 
 
