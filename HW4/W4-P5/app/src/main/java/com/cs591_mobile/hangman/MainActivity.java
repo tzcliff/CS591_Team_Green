@@ -30,10 +30,10 @@ public class MainActivity extends AppCompatActivity {
     String guessWord = "";
     ImageView image;
     TextView textViewGoal, textViewHint;
-    ArrayList<Button> clicked = new ArrayList<>();
     int currentImage;
     int lives = 6;
     int gotHint = 0;
+    Button restart_button;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +45,8 @@ public class MainActivity extends AppCompatActivity {
         textViewGoal.setGravity(Gravity.CENTER);
         textViewHint = findViewById(R.id.txtHint);
         image = (ImageView) findViewById(R.id.imgHang);
+        restart_button = findViewById(R.id.button_restart);
+
 
         if (savedInstanceState == null) {
             currentImage = 0;
@@ -67,13 +69,7 @@ public class MainActivity extends AppCompatActivity {
             updateImage(image);
             lives = savedInstanceState.getInt("lives");
             gotHint = savedInstanceState.getInt("gotHint");
-            Log.i("Jiang", game.getWord());
-            for (int j = 0; j < savedInstanceState.getInt("clickedNum"); j ++) {
-                int btnId = savedInstanceState.getInt("btn" + j);
-                Button button = findViewById(btnId);
-                button.setVisibility(View.INVISIBLE);
-                clicked.add(button);
-            }
+
             Button btnHint = findViewById(R.id.btnHint);
             if (btnHint != null && gotHint == 1) {
                 btnHint.setVisibility(View.INVISIBLE);
@@ -117,8 +113,9 @@ public class MainActivity extends AppCompatActivity {
             toast.show();
             showDialog("You win!!");
         }
-        button.setVisibility(View.INVISIBLE);
-        clicked.add(button);
+    }
+    public void restartClicked(View view){
+        newGame();
     }
 
     public GameResult checkStatus(){
@@ -147,14 +144,10 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
-        for (int i = 0; i < clicked.size(); i ++) {
-            outState.putInt("btn" + i, clicked.get(i).getId());
-        }
         outState.putString("guessWord", guessWord);
         outState.putString("game", new Gson().toJson(game));
         outState.putInt("currentImage", currentImage - 1);
         outState.putInt("lives", lives);
-        outState.putInt("clickedNum", clicked.size());
         outState.putInt("gotHint", gotHint);
 
         super.onSaveInstanceState(outState);
@@ -198,19 +191,18 @@ public class MainActivity extends AppCompatActivity {
         int wordLength = game.getWord().length();
         textViewGoal = findViewById(R.id.txtGoal);
         textViewHint = findViewById(R.id.txtHint);
-        textViewHint.setText("");
+        if(textViewHint != null) {
+            textViewHint.setText("");
+        }
         guessWord = "";
         for(int i = 0; i < wordLength; i++){
             guessWord += "_";
         }
-        for(Button button: clicked) {
-            button.setVisibility(View.VISIBLE);
-        }
+
         Button btnHint = findViewById(R.id.btnHint);
         if (btnHint != null) {
             btnHint.setVisibility(View.VISIBLE);
         }
-        clicked.clear();
         updateTextField(textViewGoal);
         Log.i("Kobe", game.getWord());
         textViewGoal.setGravity(Gravity.CENTER);

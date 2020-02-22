@@ -296,8 +296,8 @@
         android:id="@+id/imgHang"
         android:layout_width="332dp"
         android:layout_height="252dp"
-        android:layout_marginStart="39dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="64dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/hangman0" />
@@ -325,6 +325,19 @@
         android:textAlignment="center"
         android:textSize="24sp"
         android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/button_restart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="16dp"
+        android:onClick="restartClicked"
+        android:text="Restart"
+        app:layout_constraintBottom_toTopOf="@+id/imgHang"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
