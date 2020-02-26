@@ -1,8 +1,8 @@
-package com.cs591_mobile.w5_p3;
+package com.example.boggle;
 
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 /**
  * Example local unit test, which will execute on the development machine (host).
