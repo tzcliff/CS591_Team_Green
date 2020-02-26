@@ -6,9 +6,12 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
 
 
 /**
@@ -25,6 +28,10 @@ public class BottomFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
+    TextView scoreLabel; // this label should display current score
+
+    Button newGameButton;
+
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
@@ -33,6 +40,7 @@ public class BottomFragment extends Fragment {
 
     public BottomFragment() {
         // Required empty public constructor
+
     }
 
     /**
@@ -66,7 +74,19 @@ public class BottomFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+
+        View view =  inflater.inflate(R.layout.fragment_bottom, container, false);
+
+        scoreLabel = view.findViewById(R.id.scoreLabel);
+
+        newGameButton = view.findViewById(R.id.newGameButton);
+
         return inflater.inflate(R.layout.fragment_bottom, container, false);
+    }
+
+    public void newGame(View v) {
+        // #TODO do new game stuff here
+        Log.e("log", "new game");
     }
 
     // TODO: Rename method, update argument and hook method into UI event
