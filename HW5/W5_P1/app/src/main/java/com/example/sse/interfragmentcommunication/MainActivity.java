@@ -15,15 +15,11 @@ import android.view.MenuItem;
         setContentView(R.layout.activity_main);
     }
 
-//Honoring our promise to implement sendMessage from "implements ControlFragment.ControlFragmentListener" above.
     @Override
-    public void sendMessage(String msg, String msg2) {
+    public void sendFood(Food food) {
         BottomFragment receivingFragment = (BottomFragment)getFragmentManager().findFragmentById(R.id.bottomFragment);
-        receivingFragment.setFunnyMessage(msg, msg2);
+        receivingFragment.setFood(food);
     }
-
-
-
 }
 
 

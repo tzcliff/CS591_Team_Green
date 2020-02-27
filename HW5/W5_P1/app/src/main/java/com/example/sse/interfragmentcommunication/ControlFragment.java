@@ -5,12 +5,17 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
+import android.widget.Switch;
+import android.widget.Toast;
 
 
 /**
@@ -21,9 +26,7 @@ import android.widget.EditText;
 public class ControlFragment extends Fragment {
 
 
-    private EditText edtSendMessage;
-    private EditText edtSendMessage2;
-    private Button btnSendMessage;
+    private ListView listView;
 
     public ControlFragment() {  //todo, why?
         // Required empty public constructor
@@ -35,7 +38,7 @@ public class ControlFragment extends Fragment {
 //Important Fact: Since the MainActivity will implement this, we are guaranteed to find a sendMessage
 //routine there!
     public interface ControlFragmentListener {            //this is just an interface definition.
-        public void sendMessage(String msg, String msg2); //it could live in its own file.  placed here for convenience.
+        public void sendFood(Food food); //it could live in its own file.  placed here for convenience.
     }
 
     ControlFragmentListener CFL;  //Future reference to an object that implements ControlFragmentListener, Can be anything, as long as it implements all interface methods.
@@ -51,24 +54,11 @@ public class ControlFragment extends Fragment {
         CFL = (ControlFragmentListener) context;  //context is a handle to the main activity, let's bind it to our interface.
     }
 
-
-//NOTE:
-//This old onAttach, still works, but is deprecated,
-//better to use the newer one above, which passes a context object, which can also be typecast into an Activity Object.
-//    @Override
-//    public void onAttach(Activity activity) {
-//        super.onAttach(activity);
-//        CFL = (ControlFragmentListener) activity;
-//    }
-
-
-
-
-//onCreateView, called to have the fragment instantiate it's GUI.
-//this is when it is "safe" to generate references to UI components,
-//they are guaranteed to exist.  DO NOT interact with UI components
-//during onCreate of a fragment, they "may not" be ready.
-//happens in between onCreate(..) and onActivityCreated(..)
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        CFL = (ControlFragmentListener) activity;
+    }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -76,24 +66,41 @@ public class ControlFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_control, container, false);  //this needs to be separated from return statement,
 
-//IMPORTANT: MUST BREAK APART THE default return statement IF THERE ARE
-// ADDITIONAL VIEWS THAT NEED REFERENCES AND EVENT HANDLERS.
-//WHY? So we can refer to the views objects before passing view to Activity.
-//we need to bind our views to references and create event handlers before
-//before returning the inflated fragment.
-//this is why we had to break apart the initial return statement.
+        listView = (ListView) view.findViewById(R.id.foodListView);
 
-        edtSendMessage = (EditText) view.findViewById(R.id.edtSendMessage);
-        edtSendMessage2 = (EditText) view.findViewById(R.id.edtSendMessage2);
-        btnSendMessage = (Button) view.findViewById(R.id.btnSendMessage);
+//2. Create an Adapter to bind to your ListView.
+        final String[] foodList = {"Hot Dog", "Cheese Burger", "Stir Fry", "Spaghetti", "Pizza"};
+        ArrayAdapter arrayAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, foodList);
 
-        btnSendMessage.setOnClickListener(new View.OnClickListener() {
+        listView.setAdapter(arrayAdapter);
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onClick(View v) {
-  //              getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);  //FIX ME!!  //Hide the soft keyboard when we click the button.  Ref: https://stackoverflow.com/questions/18977187/how-to-hide-soft-keyboard-when-activity-starts
-                CFL.sendMessage(edtSendMessage.getText().toString(), edtSendMessage2.getText().toString());  //CFL is a handle to our MainActivity, we are sending it our message text.
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Log.i("TAG", String.valueOf(position));
+                switch (position) {
+                    case 0:
+                        CFL.sendFood(Food.HOTDOG);
+                        break;
+                    case 1:
+                        CFL.sendFood(Food.CHEESEBURGER);
+                        break;
+                    case 2:
+                        CFL.sendFood(Food.STIRFRY);
+                        break;
+                    case 3:
+                        CFL.sendFood(Food.SPAGHETTI);
+                        break;
+                    case 4:
+                        CFL.sendFood(Food.PIZZA);
+                        break;
+                    default:
+                        break;
+                }
+
             }
         });
+
 
         return view;
     }

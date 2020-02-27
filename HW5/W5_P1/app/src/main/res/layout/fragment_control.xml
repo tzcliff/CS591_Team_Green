@@ -1,30 +1,12 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/controlFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.sse.interfragmentcommunication.ControlFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-
-    <EditText
+    <ListView
+        android:id="@+id/foodListView"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/edtSendMessage"
-        android:layout_gravity="left|top"
-        android:hint="&lt;Message to Send.>" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Send Message"
-        android:id="@+id/btnSendMessage"
-        android:layout_gravity="right|top" />
-
-    <EditText
-        android:id="@+id/edtSendMessage2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="left|center_vertical"
-        android:hint="&lt;Message2 to Send.>" />
-
+        android:layout_height="wrap_content" />
 </FrameLayout>
