@@ -21,7 +21,7 @@
             android:layout_width="fill_parent"
             android:layout_height="match_parent"
             android:name="com.example.sse.interfragmentcommunication.ControlFragment"
-            android:id="@+id/fragment2"
+            android:id="@+id/controlFragment"
             android:layout_gravity="center_vertical"
             tools:layout="@layout/fragment_control"
             android:layout_weight="1" />

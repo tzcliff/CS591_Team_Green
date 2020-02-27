@@ -1,33 +1,28 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/bottomFragment"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:background="@drawable/squareburger"
     android:orientation="vertical"
     tools:context=".BottomFragment">
 
     <!-- TODO: Update blank fragment layout -->
 
-    <TextView
-        android:id="@+id/txtFunnyMessage2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="23dp"
-        android:hint="&lt;Your other message here.>"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textColor="#fff000" />
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/txtFunnyMessage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:autoText="true"
-        android:hint="&lt;your other message here.>"
-        android:text="txtFunnyMessage"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textColor="#ffffff" />
+        <TextView
+            android:id="@+id/txtFunnyMessage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:autoText="true"
+            android:hint="&lt;your other message here.>"
+            android:text="Select Your Food"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="#3F51B5"
+            app:layout_constraintTop_toTopOf="parent" />
+    </android.support.constraint.ConstraintLayout>
+
 </RelativeLayout>
