@@ -3,39 +3,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.example.sse.interfragmentcommratingbar.DrawableFragment">
+    tools:context="com.example.sse.interfragmentcommratingbar.BotFragment">
 
     <!-- TODO: Update blank fragment layout -->
-
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1">
-
-        <Button
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="&lt;&lt;&lt; Left"
-            android:id="@+id/btnLeft"
-            android:layout_gravity="top"
-            android:layout_weight="1"
-            android:layout_margin="4dp"
-            android:elevation="2dp"
-            android:elegantTextHeight="false" />
-
-        <Button
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="Right >>>"
-            android:id="@+id/btnRight"
-            android:layout_gravity="top"
-            android:layout_weight="1"
-            android:layout_margin="4dp"
-            android:elevation="2dp"
-            android:elegantTextHeight="false" />
-
-    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/LLMiddle"

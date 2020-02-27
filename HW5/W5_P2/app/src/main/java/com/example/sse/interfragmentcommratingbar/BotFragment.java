@@ -2,6 +2,7 @@ package com.example.sse.interfragmentcommratingbar;
 
 
 import android.app.Fragment;
+import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
@@ -18,31 +19,41 @@ import java.util.ArrayList;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class DrawableFragment extends Fragment {
+public class BotFragment extends Fragment {
 
     ArrayList<Drawable> drawables;  //keeping track of our drawables
     private int currDrawableIndex;  //keeping track of which drawable is currently displayed.
 
- //Boiler Plate Stuff.
-    private ImageView imgRateMe;
-    private Button btnLeft;
-    private Button btnRight;
+    public int getCurrDrawableIndex() {
+        return currDrawableIndex;
+    }
 
-//    public DrawableFragment() {
+    public void setCurrDrawableIndex(int currDrawableIndex) {
+        this.currDrawableIndex = currDrawableIndex;
+    }
+
+    //Boiler Plate Stuff.
+    private ImageView imgRateMe;
+
+//    public BotFragment() {
 //        // Required empty public constructor
 //    }
 
 
     @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        //return inflater.inflate(R.layout.fragment_drawable, container, false);  //comment this out, it would return the default view, without our setup/amendments.
-        View v = inflater.inflate(R.layout.fragment_drawable, container, false);   //MUST HAPPEN FIRST, otherwise components don't exist.
+        //return inflater.inflate(R.layout.fragment_bot, container, false);  //comment this out, it would return the default view, without our setup/amendments.
+        View v = inflater.inflate(R.layout.fragment_bot, container, false);   //MUST HAPPEN FIRST, otherwise components don't exist.
 
         imgRateMe = (ImageView) v.findViewById(R.id.imgRateMe);
-        btnRight = (Button) v.findViewById(R.id.btnRight);
-        btnLeft = (Button) v.findViewById(R.id.btnLeft);
+
 
 
         currDrawableIndex = 0;  //ArrayList Index of Current Drawable.
@@ -50,29 +61,6 @@ public class DrawableFragment extends Fragment {
         imgRateMe.setImageDrawable(null);  //Clearing out the default image from design time.
         changePicture();        //Sets the ImageView to the first drawable in the list.
 
-
-//setting up navigation call backs.  (Left and Right Buttons)
-        btnLeft.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (currDrawableIndex == 0)
-                    currDrawableIndex = drawables.size() - 1;
-                else
-                    currDrawableIndex--;
-                changePicture();
-            }
-        });
-
-        btnRight.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (currDrawableIndex == drawables.size() - 1)
-                    currDrawableIndex = 0;
-                else
-                    currDrawableIndex++;
-                changePicture();
-            }
-        });
 
         return v;   //returns the view, with our must happen last, Why? A: ____________
     }
