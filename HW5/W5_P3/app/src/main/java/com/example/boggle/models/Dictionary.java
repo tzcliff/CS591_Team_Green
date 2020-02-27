@@ -1,12 +1,35 @@
 package com.example.boggle.models;
 
-public class Dictionary {
-    private final String dictionary_url;
+import android.util.Log;
 
-    public Dictionary(String dictionary_url) {
-        this.dictionary_url = dictionary_url;
+import com.example.boggle.MainActivity;
+
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+
+public class Dictionary {
+    private final InputStream dictionaryInput;
+
+    public Dictionary(InputStream dictionaryInput) {
+        this.dictionaryInput = dictionaryInput;
     }
-    public boolean validWord(String word){
-        return false;
+
+    public Boolean validWord(String word){
+        try {
+            BufferedReader reader = new BufferedReader(
+                    new InputStreamReader(dictionaryInput));
+            String line;
+            while ((line = reader.readLine()) != null) {
+                Log.i(MainActivity.TAG,line);
+                if(line.equals(word)){
+                    return true;
+                }
+            }
+            return false;
+        } catch(Exception e) {
+            Log.d(MainActivity.TAG, "Dictionary Not Found!!!");
+            return false;
+        }
     }
 }
