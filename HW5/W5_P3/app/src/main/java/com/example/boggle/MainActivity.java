@@ -23,6 +23,7 @@ public class MainActivity extends AppCompatActivity implements TopFragment.OnFra
     public static final String TAG = "TAG";
     public Dictionary dictionary;
     private HashMap<Button, Boolean> hasBeenPressed = new HashMap<Button, Boolean>(); // key is the buttonID, value is true or false if the button has been pressed in this instance
+    private HashMap<String, Boolean> hasBeenSubmitted = new HashMap<String, Boolean>();
 
     private Context context;
 
@@ -77,9 +78,9 @@ public class MainActivity extends AppCompatActivity implements TopFragment.OnFra
             Log.e(TAG,"Dictionary doesn't exist!!");
         }
         setContentView(R.layout.activity_main);
-        generateLetters(); // #TODO repeat this line in the newGame function
+        generateLetters(); //
 
-        defaultButtonBackground(); // #TODO repeat this line in the newGame function
+        defaultButtonBackground();
 
         context = getApplicationContext();
 
@@ -92,7 +93,7 @@ public class MainActivity extends AppCompatActivity implements TopFragment.OnFra
         newGameButton = findViewById(R.id.newGameButton);
         newGameButton.setOnClickListener(this);
 
-        neverPressed = new Button(this); // #TODO repeat this line and the two lines below in newGame function
+        neverPressed = new Button(this);
         neverPressed.setText("never pressed");
         previouslyPressed = neverPressed;
 
@@ -262,6 +263,47 @@ public class MainActivity extends AppCompatActivity implements TopFragment.OnFra
         b16.setBackgroundResource(android.R.drawable.btn_default);
     }
 
+    public void clearBoard() {
+        enteredLabel.setText(""); // clear the text from the enteredLabel
+        previouslyPressed = neverPressed;
+        hasBeenPressed.put(b1, false); // set all hasBeenPressed to false
+        hasBeenPressed.put(b2, false);
+        hasBeenPressed.put(b3, false);
+        hasBeenPressed.put(b4, false);
+        hasBeenPressed.put(b5, false);
+        hasBeenPressed.put(b6, false);
+        hasBeenPressed.put(b7, false);
+        hasBeenPressed.put(b8, false);
+        hasBeenPressed.put(b9, false);
+        hasBeenPressed.put(b10, false);
+        hasBeenPressed.put(b11, false);
+        hasBeenPressed.put(b12, false);
+        hasBeenPressed.put(b13, false);
+        hasBeenPressed.put(b14, false);
+        hasBeenPressed.put(b15, false);
+        hasBeenPressed.put(b16, false);
+
+        defaultButtonBackground();
+
+
+        Log.e(TAG, "clear button pressed");
+    }
+
+    public int numVowels(String str) { // calculates and returns the number of vowels in a given string
+        int total = 0;
+        for (int i=0; i <str.length(); i++) {
+            if((str.charAt(i) == 'a') ||
+                    (str.charAt(i) == 'e')  ||
+                    (str.charAt(i) == 'i') ||
+                    (str.charAt(i) == 'o') ||
+                    (str.charAt(i) == 'u')) {
+                total++;
+            }
+        }
+
+        return total;
+    }
+
     public void onClick(View v) {
         // required method stub for View.OnClickListener
         Log.e(TAG, "inside onClick function in MainActivity");
@@ -276,42 +318,49 @@ public class MainActivity extends AppCompatActivity implements TopFragment.OnFra
 
             case R.id.clearButton:
 
-                enteredLabel.setText(""); // clear the text from the enteredLabel
-                previouslyPressed = neverPressed;
-                hasBeenPressed.put(b1, false); // set all hasBeenPressed to false
-                hasBeenPressed.put(b2, false);
-                hasBeenPressed.put(b3, false);
-                hasBeenPressed.put(b4, false);
-                hasBeenPressed.put(b5, false);
-                hasBeenPressed.put(b6, false);
-                hasBeenPressed.put(b7, false);
-                hasBeenPressed.put(b8, false);
-                hasBeenPressed.put(b9, false);
-                hasBeenPressed.put(b10, false);
-                hasBeenPressed.put(b11, false);
-                hasBeenPressed.put(b12, false);
-                hasBeenPressed.put(b13, false);
-                hasBeenPressed.put(b14, false);
-                hasBeenPressed.put(b15, false);
-                hasBeenPressed.put(b16, false);
-
-                defaultButtonBackground();
-
-
-                Log.e(TAG, "clear button pressed");
+                clearBoard();
 
                 break;
 
             case R.id.submitButton:
                 // #TODO handle submit stuff here
-                // #TODO All words must utilize a minimum of two vowels.
-                // #TODO You cannot generate the same word more than once, even if it’s from different letters.
+                String enteredText = enteredLabel.getText().toString(); // the characters that have been entered
+                if (enteredText.length() < 4 ) {
+                    clearBoard();
+                    text = "You cannot submit a word less than 4 characters in length";
+                    toast = Toast.makeText(context, text, duration);
+                    toast.show();
+                }
+
+                else if (numVowels(enteredText) < 2) { // All words must utilize a minimum of two vowels.
+                    clearBoard();
+                    text = "You cannot submit a word with less than 2 vowels";
+                    toast = Toast.makeText(context, text, duration);
+                    toast.show();
+                }
+
+                else if (hasBeenSubmitted.containsKey(enteredText)) {
+                    //  You cannot generate the same word more than once, even if it’s from different letters.
+                    text = "This word has already been submitted";
+                    toast = Toast.makeText(context, text, duration);
+                    toast.show();
+                }
+
+                else {
+                    // #TODO handle scoring here
+                    clearBoard();
+                    hasBeenSubmitted.put(enteredText, true);
+                }
                 Log.e(TAG, "submit button pressed");
 
                 break;
 
             case R.id.newGameButton:
                 // #TODO do new game stuff here
+                clearBoard();
+                generateLetters();
+                defaultButtonBackground();
+                previouslyPressed = neverPressed;
                 Log.e(TAG, "new game");
                 break;
 
