@@ -7,29 +7,32 @@ import com.example.boggle.MainActivity;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Dictionary {
-    private final InputStream dictionaryInput;
+    private List<String> wordList = new ArrayList<>();
 
     public Dictionary(InputStream dictionaryInput) {
-        this.dictionaryInput = dictionaryInput;
-    }
-
-    public Boolean validWord(String word){
         try {
             BufferedReader reader = new BufferedReader(
                     new InputStreamReader(dictionaryInput));
             String line;
             while ((line = reader.readLine()) != null) {
-                Log.i(MainActivity.TAG,line);
-                if(line.equals(word)){
-                    return true;
-                }
+                wordList.add(line.toUpperCase());
             }
-            return false;
         } catch(Exception e) {
             Log.d(MainActivity.TAG, "Dictionary Not Found!!!");
-            return false;
         }
+    }
+
+    public Boolean validWord(String word){
+        for (String key: wordList) {
+            if (key.equals(word)){
+                Log.i(MainActivity.TAG,key);
+                return true;
+            }
+        }
+        return false;
     }
 }

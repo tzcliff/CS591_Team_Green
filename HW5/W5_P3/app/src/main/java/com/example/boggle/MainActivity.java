@@ -60,7 +60,7 @@ public class MainActivity extends AppCompatActivity implements TopFragment.OnFra
     private Button clearButton;
     private Button submitButton;
 
-
+    private int score;
 
 
     @Override
@@ -98,7 +98,8 @@ public class MainActivity extends AppCompatActivity implements TopFragment.OnFra
         previouslyPressed = neverPressed;
 
         adjacent = new Button[][]{{b1, b2, b3, b4}, {b5, b6, b7, b8}, {b9, b10, b11, b12}, {b13, b14, b15, b16}}; // this 2d array is an array of buttons to calculate which is adjacent
-
+        score = 0;
+        scoreLabel.setText("Score: 0");
     }
 
     public String generateRandLetter (){
@@ -292,16 +293,29 @@ public class MainActivity extends AppCompatActivity implements TopFragment.OnFra
     public int numVowels(String str) { // calculates and returns the number of vowels in a given string
         int total = 0;
         for (int i=0; i <str.length(); i++) {
-            if((str.charAt(i) == 'a') ||
-                    (str.charAt(i) == 'e')  ||
-                    (str.charAt(i) == 'i') ||
-                    (str.charAt(i) == 'o') ||
-                    (str.charAt(i) == 'u')) {
+            if((str.charAt(i) == 'A') ||
+                    (str.charAt(i) == 'E')  ||
+                    (str.charAt(i) == 'I') ||
+                    (str.charAt(i) == 'O') ||
+                    (str.charAt(i) == 'U')) {
                 total++;
             }
         }
 
         return total;
+    }
+
+    public Boolean hasSpecCharacter(String str) {
+        for (int i=0; i <str.length(); i++) {
+            if((str.charAt(i) == 'S') ||
+                    (str.charAt(i) == 'Z')  ||
+                    (str.charAt(i) == 'P') ||
+                    (str.charAt(i) == 'X') ||
+                    (str.charAt(i) == 'Q')) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public void onClick(View v) {
@@ -324,16 +338,14 @@ public class MainActivity extends AppCompatActivity implements TopFragment.OnFra
 
             case R.id.submitButton:
                 // #TODO handle submit stuff here
-                String enteredText = enteredLabel.getText().toString(); // the characters that have been entered
+                String enteredText = enteredLabel.getText().toString().replace(" ", ""); // the characters that have been entered
                 if (enteredText.length() < 4 ) {
-                    clearBoard();
                     text = "You cannot submit a word less than 4 characters in length";
                     toast = Toast.makeText(context, text, duration);
                     toast.show();
                 }
 
                 else if (numVowels(enteredText) < 2) { // All words must utilize a minimum of two vowels.
-                    clearBoard();
                     text = "You cannot submit a word with less than 2 vowels";
                     toast = Toast.makeText(context, text, duration);
                     toast.show();
@@ -347,8 +359,24 @@ public class MainActivity extends AppCompatActivity implements TopFragment.OnFra
                 }
 
                 else {
-                    // #TODO handle scoring here
+                    if (dictionary.validWord(enteredText)) {
+                        int tmp = numVowels(enteredText) * 4 + enteredText.length();
+                        if (hasSpecCharacter(enteredText)) tmp *= 2;
+                        text = "That’s correct, +" + tmp;
+                        toast = Toast.makeText(context, text, duration);
+                        toast.show();
+                        score += tmp;
+                    }
+                    else {
+                        text = "That’s incorrect, -10";
+                        toast = Toast.makeText(context, text, duration);
+                        toast.show();
+                        score -= 10;
+                    }
+                    scoreLabel.setText("Score: " + score);
                     clearBoard();
+                    generateLetters();
+                    defaultButtonBackground();
                     hasBeenSubmitted.put(enteredText, true);
                 }
                 Log.e(TAG, "submit button pressed");
@@ -360,6 +388,8 @@ public class MainActivity extends AppCompatActivity implements TopFragment.OnFra
                 clearBoard();
                 generateLetters();
                 defaultButtonBackground();
+                //score = 0;
+                //scoreLabel.setText("Score: 0");
                 previouslyPressed = neverPressed;
                 Log.e(TAG, "new game");
                 break;
