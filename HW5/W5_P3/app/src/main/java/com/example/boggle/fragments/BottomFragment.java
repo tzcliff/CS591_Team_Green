@@ -1,10 +1,13 @@
 package com.example.boggle.fragments;
 
+
+import android.app.Activity;
+import android.app.Fragment;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 
-import androidx.fragment.app.Fragment;
+
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,6 +15,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+
+
 
 import com.example.boggle.R;
 
@@ -24,7 +29,7 @@ import com.example.boggle.R;
  * Use the {@link BottomFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class BottomFragment extends Fragment {
+public class BottomFragment extends Fragment implements View.OnClickListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -35,6 +40,9 @@ public class BottomFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    private Button newGameButton;
+    public TextView scoreLabel; // this label should display current score
+    public int score;
 
     private OnFragmentInteractionListener mListener;
 
@@ -76,8 +84,13 @@ public class BottomFragment extends Fragment {
         // Inflate the layout for this fragment
 
         View view =  inflater.inflate(R.layout.fragment_bottom, container, false);
+        newGameButton = (Button) view.findViewById(R.id.newGameButton);
+        newGameButton.setOnClickListener(this);
+        scoreLabel = view.findViewById(R.id.scoreLabel);
+        score = 0;
+        scoreLabel.setText("Score: 0");
 
-        return inflater.inflate(R.layout.fragment_bottom, container, false);
+        return view;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -98,10 +111,27 @@ public class BottomFragment extends Fragment {
         }
     }
 
+    public void onAttach(Activity activity) {
+        Log.d("Jiang", "onAttach" );
+        super.onAttach(activity);
+        if (activity instanceof OnFragmentInteractionListener) {
+            mListener = (OnFragmentInteractionListener) activity;
+            Log.d("Jiang", "Ml" );
+        } else {
+            throw new RuntimeException(
+                    " must implement OnFragmentInteractionListener");
+        }
+    }
+
     @Override
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    @Override
+    public void onClick(View view) {
+        mListener.newGame();
     }
 
     /**
@@ -117,5 +147,6 @@ public class BottomFragment extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+        public void newGame();
     }
 }
