@@ -149,7 +149,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="E X A M P L E" />
+            android:gravity="center" />
     </LinearLayout>
 
     <LinearLayout
