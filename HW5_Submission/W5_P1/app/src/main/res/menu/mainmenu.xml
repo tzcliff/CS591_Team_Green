@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+          xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/menu1"
+        android:title="happy stick figure"
+        android:icon="@drawable/ic_accessibility_24dp"
+        app:showAsAction="ifRoom">
+    </item>
+
+    <item
+        android:id="@+id/menu2"
+        android:title="Call your Mom"
+        android:icon="@drawable/ic_ring_volume_24dp"
+        app:showAsAction="ifRoom">
+    </item>
+
+
+</menu>
