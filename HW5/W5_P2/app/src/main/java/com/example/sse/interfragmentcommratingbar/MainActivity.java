@@ -6,7 +6,7 @@ import android.util.Log;
 
 import java.io.IOException;
 
-public class MainActivity extends Activity implements TopFragment.ControlFragmentListener {
+public class MainActivity extends Activity implements TopFragment.ControlFragmentListener, BotFragment.ControlFragmentListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

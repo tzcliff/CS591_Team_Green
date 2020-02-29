@@ -33,14 +33,14 @@
         android:layout_weight="1">
 
         <RatingBar
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
             android:id="@+id/ratingBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:numStars="7"
-            android:rating="2"
-            android:stepSize="1"
-            android:padding="4dp" />
+            android:padding="4dp"
+            android:rating="0"
+            android:stepSize="0.1" />
     </LinearLayout>
 
 </LinearLayout>

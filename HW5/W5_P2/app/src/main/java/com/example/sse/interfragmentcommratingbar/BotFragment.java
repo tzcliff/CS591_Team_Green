@@ -1,6 +1,7 @@
 package com.example.sse.interfragmentcommratingbar;
 
 
+import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
@@ -11,7 +12,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 
+import java.lang.reflect.Array;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 
@@ -34,6 +37,11 @@ public class BotFragment extends Fragment {
 
     //Boiler Plate Stuff.
     private ImageView imgRateMe;
+    private double[] ratings;
+    private RatingBar ratBar;
+
+
+
 
 //    public BotFragment() {
 //        // Required empty public constructor
@@ -44,22 +52,37 @@ public class BotFragment extends Fragment {
     public void onAttach(Context context) {
         super.onAttach(context);
     }
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         //return inflater.inflate(R.layout.fragment_bot, container, false);  //comment this out, it would return the default view, without our setup/amendments.
+        ratings = new double[9];
         View v = inflater.inflate(R.layout.fragment_bot, container, false);   //MUST HAPPEN FIRST, otherwise components don't exist.
 
         imgRateMe = (ImageView) v.findViewById(R.id.imgRateMe);
-
-
-
+        ratBar = (RatingBar) v.findViewById(R.id.ratingBar);
         currDrawableIndex = 0;  //ArrayList Index of Current Drawable.
         getDrawables();         //Retrieves the drawables we want, ie, prefixed with "animal_"
         imgRateMe.setImageDrawable(null);  //Clearing out the default image from design time.
         changePicture();        //Sets the ImageView to the first drawable in the list.
+
+
+        ratBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener(){
+            @Override
+            public void onRatingChanged(RatingBar ratBar, float v, boolean b) {
+                ratings[currDrawableIndex] = Double.valueOf(String.valueOf(ratBar.getRating()));
+            }
+
+
+        }
+        );
+
 
 
         return v;   //returns the view, with our must happen last, Why? A: ____________
@@ -67,7 +90,8 @@ public class BotFragment extends Fragment {
 
 //Routine to change the picture in the image view dynamically.
     public void changePicture() {
-      imgRateMe.setImageDrawable(drawables.get(currDrawableIndex));  //note, this is the preferred way of changing images, don't worry about parent viewgroup size changes.
+        imgRateMe.setImageDrawable(drawables.get(currDrawableIndex));  //note, this is the preferred way of changing images, don't worry about parent viewgroup size changes.
+        ratBar.setRating(Float.valueOf(String.valueOf(ratings[currDrawableIndex])));
     }
 
 //Quick and Dirty way to get drawable resources, we prefix with "animal_" to filter out just the ones we want to display.
@@ -87,5 +111,8 @@ public class BotFragment extends Fragment {
                 e.printStackTrace();
             }
         }
+    }
+
+    public interface ControlFragmentListener {
     }
 }
