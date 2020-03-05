@@ -2,6 +2,7 @@ package com.example.sse.customlistview_sse;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -15,6 +16,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,7 +30,6 @@ public class MainActivity extends AppCompatActivity {
     private
     ListView lvEpisodes;     //Reference to the listview GUI component
     ListAdapter lvAdapter;   //Reference to the Adapter used to populate the listview.
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,6 +40,12 @@ public class MainActivity extends AppCompatActivity {
         lvEpisodes.setAdapter(lvAdapter);
 
 
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
     }
 
     @Override
@@ -112,9 +119,17 @@ class MyCustomAdapter extends BaseAdapter {
 //     int episodeImages[];         //this approach is fine for now.
      ArrayList<Integer> episodeImages;  //Well, we can use one arrayList too...  Just mixing it up, Arrays or Templated ArrayLists, you choose.
 
+
+    Float ratings[];
+
 //    ArrayList<String> episodes;
 //    ArrayList<String> episodeDescriptions;
 
+    // Add SharedPreferences variable
+    private SharedPreferences sharedPreferences;
+
+    // Add RatingBar variable
+    RatingBar ratingBar;
     Button btnRandom;
     Context context;   //Creating a reference to our context object, so we only have to get it once.  Context enables access to application specific resources.
                        // Eg, spawning & receiving intents, locating the various managers.
@@ -129,9 +144,14 @@ class MyCustomAdapter extends BaseAdapter {
         episodes =aContext.getResources().getStringArray(R.array.episodes);  //retrieving list of episodes predefined in strings-array "episodes" in strings.xml
         episodeDescriptions = aContext.getResources().getStringArray(R.array.episode_descriptions);
 
+        //Initialize the ratings array with episodes length
+        ratings = new Float[episodes.length];
+        retrieveRateBarSharedPreferenceInfo();
 //This is how you would do it if you were using an ArrayList, leaving code here for reference, though we could use it instead of the above.
 //        episodes = (ArrayList<String>) Arrays.asList(aContext.getResources().getStringArray(R.array.episodes));  //retrieving list of episodes predefined in strings-array "episodes" in strings.xml
 //        episodeDescriptions = (ArrayList<String>) Arrays.asList(aContext.getResources().getStringArray(R.array.episode_descriptions));  //Also casting to a friendly ArrayList.
+
+        // Get context SharedPreferences
 
 
         episodeImages = new ArrayList<Integer>();   //Could also use helper function "getDrawables(..)" below to auto-extract drawable resources, but keeping things as simple as possible.
@@ -142,6 +162,7 @@ class MyCustomAdapter extends BaseAdapter {
         episodeImages.add(R.drawable.st_platos_stepchildren__kirk_spock);
         episodeImages.add(R.drawable.st_the_naked_time__sulu_sword);
         episodeImages.add(R.drawable.st_the_trouble_with_tribbles__kirk_tribbles);
+
     }
 
 //STEP 3: Override and implement getCount(..), ListView uses this to determine how many rows to render.
@@ -162,6 +183,35 @@ class MyCustomAdapter extends BaseAdapter {
     @Override
     public long getItemId(int position) {
         return position;  //Another call we aren't using, but have to do something since we had to implement (base is abstract).
+    }
+
+
+
+    /**
+     * Save rating bar info
+     * @param episodeName
+     * @param rating
+     */
+    void saveRateBarSharedPreferenceInfo(String episodeName, Float rating){
+
+        sharedPreferences = context.getSharedPreferences("Info", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        // Add rate bar info
+        editor.putFloat(episodeName, rating);
+        Log.i("TAG", episodeName + " " + rating);
+        //4. Save your information.
+        editor.apply();
+
+    }
+
+    /**
+     * Retrieve all ratings
+     */
+    void retrieveRateBarSharedPreferenceInfo(){
+        sharedPreferences = context.getSharedPreferences("Info", Context.MODE_PRIVATE);
+        for(int i = 0; i < ratings.length; i++){
+            ratings[i] = sharedPreferences.getFloat(episodes[i] + "_rb", 0.0F);
+        }
     }
 
 //THIS IS WHERE THE ACTION HAPPENS.  getView(..) is how each row gets rendered.
@@ -203,6 +253,25 @@ class MyCustomAdapter extends BaseAdapter {
         TextView tvEpisodeTitle = (TextView) row.findViewById(R.id.tvEpisodeTitle);
         TextView tvEpisodeDescription = (TextView) row.findViewById(R.id.tvEpisodeDescription);
 
+
+        // Find ratingBar by Id
+        ratingBar = (RatingBar) row.findViewById(R.id.rbEpisode);
+
+
+        // When change rating, change the saved value as well.
+
+        ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+            @Override
+            public void onRatingChanged(RatingBar ratingBar, float v, boolean b) {
+                ratings[position] = v;
+                saveRateBarSharedPreferenceInfo(episodes[position] + "_rb", v);
+
+            }
+        });
+
+
+        // set rating bar rating to saved value.
+        ratingBar.setRating(ratings[position]);
         tvEpisodeTitle.setText(episodes[position]);
         tvEpisodeDescription.setText(episodeDescriptions[position]);
         imgEpisode.setImageResource(episodeImages.get(position).intValue());
