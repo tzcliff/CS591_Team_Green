@@ -1,8 +1,10 @@
 package com.example.sse.customlistview_sse;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -17,6 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -34,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
         lvEpisodes = (ListView)findViewById(R.id.lvEpisodes);
         lvAdapter = new MyCustomAdapter(this.getBaseContext());  //instead of passing the boring default string adapter, let's pass our own, see class MyCustomAdapter below!
         lvEpisodes.setAdapter(lvAdapter);
+
 
     }
 
@@ -163,7 +167,7 @@ class MyCustomAdapter extends BaseAdapter {
 //THIS IS WHERE THE ACTION HAPPENS.  getView(..) is how each row gets rendered.
 //STEP 5: Easy as A-B-C
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {  //convertView is Row (it may be null), parent is the layout that has the row Views.
+    public View getView(final int position, final View convertView, ViewGroup parent) {  //convertView is Row (it may be null), parent is the layout that has the row Views.
 
 //STEP 5a: Inflate the listview row based on the xml.
         View row;  //this will refer to the row to be inflated or displayed if it's already been displayed. (listview_row.xml)
@@ -179,6 +183,20 @@ class MyCustomAdapter extends BaseAdapter {
         {
             row = convertView;
         }
+
+
+        // a. Set row to be clickable to trigger the onClick Event
+        row.setClickable(true);
+        row.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.i("TAG", "Item " + episodes[position] + " Clicked");
+                Intent intent = new Intent(view.getContext(), DisplayWebActivity.class);
+                intent.putExtra("Name", episodes[position]);
+                view.getContext().startActivity(intent);
+            }
+        });
+
 
 //STEP 5b: Now that we have a valid row instance, we need to get references to the views within that row and fill with the appropriate text and images.
         ImageView imgEpisode = (ImageView) row.findViewById(R.id.imgEpisode);  //Q: Notice we prefixed findViewByID with row, why?  A: Row, is the container.
