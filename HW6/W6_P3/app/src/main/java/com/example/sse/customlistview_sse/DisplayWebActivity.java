@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
+import android.widget.Toast;
 
 public class DisplayWebActivity extends AppCompatActivity {
 
@@ -16,6 +18,14 @@ public class DisplayWebActivity extends AppCompatActivity {
         Intent intent = getIntent();
         String message = intent.getStringExtra("Name");
         WebView webView = (WebView) findViewById(R.id.webView);
+        // Set up WebViewClient
+        webView.setWebViewClient(new WebViewClient() {
+            @SuppressWarnings("deprecation")
+            @Override
+            public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
+                Toast.makeText(DisplayWebActivity.this, description, Toast.LENGTH_SHORT).show();
+            }
+        });
         webView.loadUrl(pickWeb(message));
 
 

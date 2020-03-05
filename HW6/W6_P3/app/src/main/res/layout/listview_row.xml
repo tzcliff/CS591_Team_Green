@@ -34,12 +34,11 @@
             android:layout_gravity="center_horizontal" />
 
         <RatingBar
+            android:id="@+id/rbEpisode"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/rbEpisode"
             android:layout_gravity="center_horizontal"
             android:numStars="5"
-            android:rating="3"
             android:stepSize=".5" />
 
         <Button
