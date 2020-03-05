@@ -20,5 +20,16 @@
         <item>So cute!!</item>
     </string-array>
 
+    <string-array name="episode_url">
+        <item>https://en.wikipedia.org/wiki/Spock%27s_Brain</item>
+        <item>https://en.wikipedia.org/wiki/Arena_(Star_Trek:_The_Original_Series)</item>
+        <item>https://en.wikipedia.org/wiki/This_Side_of_Paradise_(Star_Trek:_The_Original_Series)</item>
+        <item>https://en.wikipedia.org/wiki/Mirror,_Mirror_(Star_Trek:_The_Original_Series)</item>
+        <item>https://en.wikipedia.org/wiki/Plato%27s_Stepchildren</item>
+        <item>https://en.wikipedia.org/wiki/The_Naked_Time</item>
+        <item>https://en.wikipedia.org/wiki/The_Trouble_with_Tribbles</item>
+    </string-array>
+
+
 
 </resources>
