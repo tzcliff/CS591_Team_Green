@@ -27,18 +27,27 @@
 
     <item
         android:id="@+id/mnu_three"
+        android:icon="@drawable/ic_brightness_3_black_24dp"
         android:title="Menu3"
-        android:icon ="@drawable/ic_brightness_3_black_24dp"
-        app:showAsAction="ifRoom">
-    </item>
-
+        app:showAsAction="ifRoom"></item>
     <item
         android:id="@+id/mnu_four"
         android:title="Menu4"
         android:icon ="@drawable/ic_local_florist_black_24dp"
         app:showAsAction="ifRoom">
     </item>
-
+    <item
+        android:id="@+id/menu_sortByTitle"
+        android:title="SortByTitle" />
+    <item
+        android:id="@+id/menu_sortByRating"
+        android:title="SortByRating" />
+    <item
+        android:id="@+id/menu_fourStarsAndMore"
+        android:title="Four Stars And More" />
+    <item
+        android:id="@+id/menu_kahn"
+        android:title="Kahn!!!" />
 
 
 </menu>
