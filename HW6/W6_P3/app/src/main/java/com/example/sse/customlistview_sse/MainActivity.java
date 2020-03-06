@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -198,7 +197,6 @@ class MyCustomAdapter extends BaseAdapter {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         // Add rate bar info
         editor.putFloat(episodeName, rating);
-        Log.i("TAG", episodeName + " " + rating);
         //4. Save your information.
         editor.apply();
 
@@ -240,7 +238,6 @@ class MyCustomAdapter extends BaseAdapter {
         row.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.i("TAG", "Item " + episodes[position] + " Clicked");
                 Intent intent = new Intent(view.getContext(), DisplayWebActivity.class);
                 intent.putExtra("Name", episodes[position]);
                 view.getContext().startActivity(intent);
