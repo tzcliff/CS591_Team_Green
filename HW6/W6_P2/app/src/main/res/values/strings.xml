@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">W6_P2</string>
+    <string name="bear_button">Bear</string>
+    <string name="giraffe_button">Giraffe</string>
 </resources>
