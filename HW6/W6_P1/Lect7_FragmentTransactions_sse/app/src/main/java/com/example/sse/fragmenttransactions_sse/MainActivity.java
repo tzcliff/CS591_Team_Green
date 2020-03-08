@@ -39,6 +39,15 @@ private
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        /*
+        The original code had a few problems. It was using multiple different methods of Fragment Transactions so there wasn't any unification. I chose to use detach and attach because it does not destroy the Fragments,
+        it only removes them from the View. This is less taxing on the hardware than having to create a whole new Fragment each time a button is pressed via the replace, or hide and add methods.
+        I also changed the code around so that we always make sure everything isn't null before it is accessed. This will prevent any crashes from occuring. We always make sure to add to back stack so
+        that the back button will work as the user anticipates.
+         */
+
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -94,24 +103,24 @@ private
 
 public void showFrag1() {
 
-     if (f1 == null)
+     if (f1 == null) // make sure f1 still exists
          f1 = new Frag_One();
 
 
     FragmentTransaction ft = fm.beginTransaction ();  //Create a reference to a fragment transaction.
 
-    if (fm.findFragmentByTag("tag1") == null) {
+    if (fm.findFragmentByTag("tag1") == null) { // check if the fragment exists
 
-        ft.add(R.id.FragLayout, f1, "tag1");
+        ft.add(R.id.FragLayout, f1, "tag1"); // if not, we must add it again with the tag
     }
 
-    if (fm.findFragmentByTag("tag1") != null) {
+    if (fm.findFragmentByTag("tag1") != null) { // make sure it exists
         f1 = (Frag_One) fm.findFragmentByTag("tag1");   //what should we do if f1 doesn't exist anymore?  How do we check and how do we fix? A: If it no longer exists, create a new instance of it. Check if it's null via an if statement.
 
     }
-    // ft.replace(R.id.FragLayout, f1);
+    // ft.replace(R.id.FragLayout, f1); we won't be using replace because it is more resource intensive
 
-    if (f2 != null) {
+    if (f2 != null) { // make sure f2 exists
         ft.detach(f2);
     }
 
