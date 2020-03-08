@@ -20,6 +20,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 
@@ -37,7 +39,6 @@ public class MainActivity extends AppCompatActivity {
 
         lvEpisodes = (ListView)findViewById(R.id.lvEpisodes);
         lvAdapter = new MyCustomAdapter(this.getBaseContext());  //instead of passing the boring default string adapter, let's pass our own, see class MyCustomAdapter below!
-
         lvEpisodes.setAdapter(lvAdapter);
 
 
@@ -80,15 +81,45 @@ public class MainActivity extends AppCompatActivity {
         }
 
         /**
-         *  if the menu item is sort by title
+         *  sort by title
          */
         if(id == R.id.menu_sortByTitle){
 
             Log.i("TAG", "Sort By title clicked");
-
+            lvAdapter.sortByTitle();
+            lvEpisodes.setAdapter(lvAdapter);
+            lvAdapter.notifyDataSetChanged();
             return true;
         }
-            return super.onOptionsItemSelected(item);  //if none of the above are true, do the default and return a boolean.
+        /**
+         * sort by Rating
+         */
+        if(id == R.id.menu_sortByRating){
+            Log.i("TAG", "Sort By ratings clicked");
+            lvAdapter.sortByRatings();
+            lvEpisodes.setAdapter(lvAdapter);
+            lvAdapter.notifyDataSetChanged();
+            return true;
+        }
+        /**
+         * Switch to show all or only four or more stars episodes
+         */
+        if(id == R.id.menu_fourStarsAndMore){
+            Log.i("TAG", "Four or More Stars clicked");
+            lvAdapter.filterFourStar();
+            lvEpisodes.setAdapter(lvAdapter);
+            lvAdapter.notifyDataSetChanged();
+        }
+        /**
+         * When menu_kahn clicked, trigger a new activity that plays a video
+         */
+        if(id == R.id.menu_kahn){
+            Log.i("TAG", "Kahn clicked");
+            Intent intent = new Intent(MainActivity.this, VideoPlayerActivity.class);
+            MainActivity.this.startActivity(intent);
+        }
+
+        return super.onOptionsItemSelected(item);  //if none of the above are true, do the default and return a boolean.
     }
 }
 
@@ -101,6 +132,7 @@ class MyCustomAdapter extends BaseAdapter {
 
     // Use a list of Episode objects which concludes all the info.
     private List<Episode> episodes;
+    private List<Episode> lessThanFour;
     // Add SharedPreferences variable
     private SharedPreferences sharedPreferences;
     // Add RatingBar variable
@@ -116,6 +148,8 @@ class MyCustomAdapter extends BaseAdapter {
         context = aContext;  //saving the context we'll need it again.
         // Initialize ArrayList
         episodes = new ArrayList<>();
+
+        lessThanFour = new ArrayList<>();
 
         List<Integer> episodeImages;
         episodeImages = new ArrayList<>();
@@ -190,6 +224,67 @@ class MyCustomAdapter extends BaseAdapter {
         }
     }
 
+    /**
+     * Sort List episodes by Title
+     */
+    public void sortByTitle(){
+        Collections.sort(episodes, new Comparator<Episode>() {
+            @Override
+            public int compare(Episode episode, Episode t1) {
+                if(episode.getEpisodeName().compareTo(t1.getEpisodeName()) > 0)
+                return 1;
+                else if(episode.getEpisodeName().compareTo(t1.getEpisodeName()) < 0){
+                    return -1;
+                }
+                else {
+                    return 0;
+                }
+            }
+        });
+    }
+
+    /**
+     * Sort List episodes by Ratings
+     */
+    public void sortByRatings(){
+        Collections.sort(episodes, new Comparator<Episode>() {
+            @Override
+            public int compare(Episode episode, Episode t1) {
+                if(episode.getEpisodeRatings() < t1.getEpisodeRatings())
+                    return 1;
+                else if(episode.getEpisodeRatings() > t1.getEpisodeRatings()){
+                    return -1;
+                }
+                else {
+                    return 0;
+                }
+            }
+        });
+    }
+
+    /**
+     * Check whether current lessThanFour list is empty
+     * Decide whether adding or removing from episodes list
+     */
+    public void filterFourStar(){
+        if(lessThanFour.size() == 0){
+            for(int i = episodes.size() - 1; i >= 0; i--){
+                if(episodes.get(i).getEpisodeRatings() < 4){
+                    lessThanFour.add(episodes.get(i));
+                    episodes.remove(i);
+                }
+            }
+        }
+        else{
+            for(int i = lessThanFour.size() - 1; i >= 0; i--){
+                episodes.add(lessThanFour.get(i));
+                lessThanFour.remove(i);
+            }
+        }
+    }
+
+
+
 
     //THIS IS WHERE THE ACTION HAPPENS.  getView(..) is how each row gets rendered.
 //STEP 5: Easy as A-B-C
@@ -221,12 +316,10 @@ class MyCustomAdapter extends BaseAdapter {
             }
         });
 
-
 //STEP 5b: Now that we have a valid row instance, we need to get references to the views within that row and fill with the appropriate text and images.
         ImageView imgEpisode = (ImageView) row.findViewById(R.id.imgEpisode);  //Q: Notice we prefixed findViewByID with row, why?  A: Row, is the container.
         TextView tvEpisodeTitle = (TextView) row.findViewById(R.id.tvEpisodeTitle);
         TextView tvEpisodeDescription = (TextView) row.findViewById(R.id.tvEpisodeDescription);
-
 
         // Find ratingBar by Id
         ratingBar = (RatingBar) row.findViewById(R.id.rbEpisode);
@@ -247,7 +340,6 @@ class MyCustomAdapter extends BaseAdapter {
         tvEpisodeTitle.setText(episodes.get(position).getEpisodeName());
         tvEpisodeDescription.setText(episodes.get(position).getEpisodeDescriptions());
         imgEpisode.setImageResource(episodes.get(position).getEpisodeImage().intValue());
-
         btnRandom = (Button) row.findViewById(R.id.btnRandom);
         final String randomMsg = ((Integer) position).toString() + ": " + episodes.get(position).getEpisodeDescriptions();
         btnRandom.setOnClickListener(new View.OnClickListener() {
