@@ -13,7 +13,7 @@
         android:layout_marginTop="400dp"
         android:layout_marginEnd="200dp"
         android:onClick="firstButtonClick"
-        android:text="Button"
+        android:text="@string/bear_button"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -26,7 +26,7 @@
         android:layout_marginStart="200dp"
         android:layout_marginTop="400dp"
         android:onClick="secondButtonClick"
-        android:text="Button"
+        android:text="@string/giraffe_button"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -34,8 +34,9 @@
 
     <ImageView
         android:id="@+id/image"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@android:color/transparent"
         app:layout_constraintBottom_toTopOf="@+id/caption"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -47,7 +48,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="300dp"
-        android:text="TextView"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.os.Bundle;
 
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -24,10 +25,11 @@ public class MainActivity extends AppCompatActivity {
         GIRAFFE
     }
 
-    ImageType currentImage;
+    ImageType currentImage; // easy way to check what the image currently is
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.e("KOBE", "created");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -37,32 +39,7 @@ public class MainActivity extends AppCompatActivity {
         image = findViewById(R.id.image);
         context = getApplicationContext();
 
-        try { // try catch because if the app has never been opened, these preferences won't exist yet (this is the answer to question 2d on the worksheet)
-            SharedPreferences simpleAppInfo = getSharedPreferences("ActivityOneInfo", Context.MODE_PRIVATE);
-
-            String captionString = simpleAppInfo.getString("caption", "<missing>");
-            String imageString = simpleAppInfo.getString("image", "<missing>");
-
-            //Retrieving data from shared preferences hashmap.
-            caption.setText(captionString);  //The second param is the default value, eg, if the value doesn't exist.
-
-            if (imageString.equals("bear")) {
-                currentImage = ImageType.BEAR;
-                image.setImageResource(R.drawable.bear);
-            }
-
-            else if (imageString.equals("giraffe")) {
-                currentImage = ImageType.GIRAFFE;
-                image.setImageResource(R.drawable.giraffe);
-            }
-
-            else {
-
-            }
-        }
-        catch(Exception ex) {
-            System.out.println("Exception: " + ex);
-        }
+        retrieveSharedPreferenceInfo();
 
 
 
@@ -71,10 +48,15 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        Log.e("KOBE", "destroyed");
+        saveSharedPreferenceInfo();
 
-        // #TODO: Do save instance stuff here
+
+    }
+
+    private void saveSharedPreferenceInfo() {
         //1. Refer to the SharedPreference Object.
-        SharedPreferences simpleAppInfo = getSharedPreferences("ActivityOneInfo", Context.MODE_PRIVATE);  //Private means no other Apps can access this.
+        SharedPreferences simpleAppInfo = getSharedPreferences("MainActivity", Context.MODE_PRIVATE);  //Private means no other Apps can access this.
 
         //2. Create an Shared Preferences Editor for Editing Shared Preferences.
         //Note, not a real editor, just an object that allows editing...
@@ -82,6 +64,7 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences.Editor editor = simpleAppInfo.edit();
 
         //3. Store what's important!  Key Value Pair, what else is new...
+        Log.e("KOBE", caption.getText().toString());
         editor.putString("caption", caption.getText().toString());
         if (currentImage == ImageType.BEAR) { // check what type of image we're currently using
             editor.putString("image", "bear");
@@ -94,10 +77,43 @@ public class MainActivity extends AppCompatActivity {
         editor.apply();
     }
 
+    private void retrieveSharedPreferenceInfo() {
+        try { // try catch because if the app has never been opened, these preferences won't exist yet (this is the answer to question 2d on the worksheet)
+            //1. Refer to the SharedPreference Object.
+            SharedPreferences simpleAppInfo = getSharedPreferences("MainActivity", Context.MODE_PRIVATE);
+
+            // Create Strings and set them equal to the corresponding values for each key
+            String captionString = simpleAppInfo.getString("caption", "<missing>"); //The second param is the default value, eg, if the value doesn't exist.
+            String imageString = simpleAppInfo.getString("image", "<missing>");
+
+            //Retrieving data from shared preferences hashmap.
+            caption.setText(captionString);
+
+            if (imageString.equals("bear")) { // if we stored a bear
+                currentImage = ImageType.BEAR; // set the image to be the bear
+                image.setImageResource(R.drawable.bear); // keep track of this with our variable
+            }
+
+            else if (imageString.equals("giraffe")) {
+                currentImage = ImageType.GIRAFFE;
+                image.setImageResource(R.drawable.giraffe);
+            }
+
+            else {
+                // No value was stored so the default of <missing> occurs and we don't have an iamge to show for this
+            }
+        }
+        catch(Exception ex) {
+            System.out.println("Exception: " + ex);
+        }
+    }
+
+
     public void firstButtonClick(View v) {
         caption.setText("Bear");
         image.setImageResource(R.drawable.bear);
         currentImage = ImageType.BEAR;
+        saveSharedPreferenceInfo(); // also saving here because sometimes onDestroy isn't called, for instance swiping the app away in the recent apps Android screen
 
     }
 
@@ -105,6 +121,7 @@ public class MainActivity extends AppCompatActivity {
         caption.setText("Giraffe");
         image.setImageResource(R.drawable.giraffe);
         currentImage = ImageType.GIRAFFE;
+        saveSharedPreferenceInfo(); // also saving here because sometimes onDestroy isn't called, for instance swiping the app away in the recent apps Android screen
 
     }
 
