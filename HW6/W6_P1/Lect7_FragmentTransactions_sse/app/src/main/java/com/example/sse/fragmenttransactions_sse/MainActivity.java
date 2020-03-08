@@ -50,7 +50,7 @@ private
         btnFrag3 = (Button) findViewById(R.id.btnFrag3);
         FragLayout = (LinearLayout) findViewById(R.id.FragLayout);
 
-//        f1 = (Frag_One) findViewById(R.id.frag1);  //Q: Why won't this work for fragments?  Does the fragment even exist in R.java? _____________
+//        f1 = (Frag_One) findViewById(R.id.frag1);  //Q: Why won't this work for fragments?  Does the fragment even exist in R.java? A: No, because the fragments are hosted by the activity
 
     //5a.  We actually have to create the fragments ourselves.  We left R behind when we took control of rendering.
         f1 = new Frag_One();
@@ -58,15 +58,16 @@ private
         f3 = new Frag_Three();
 
     //5b. Grab a reference to the Activity's Fragment Manager, Every Activity has one!
-       fm = getFragmentManager ();  //that was easy.
-//         fm = getSupportFragmentManager();  // **When would you use this instead?? A: __________________
+       fm = getFragmentManager();  //that was easy.
+//         fm = getSupportFragmentManager();  // **When would you use this instead?? A: When you are using android.support.v4.app.FragmentManager then you should use getSupportFragmentManager() and if you are using android.app.FragmentManager then use getFragmentManager()
 
 
     //5c. Now we can "plop" fragment(s) into our container.
         FragmentTransaction ft = fm.beginTransaction ();  //Create a reference to a fragment transaction.
         ft.add(R.id.FragLayout, f1, "tag1");  //now we have added our fragement to our Activity programmatically.  The other fragments exist, but have not been added yet.
-        ft.addToBackStack ("myFrag1");  //why do we do this?
+        ft.addToBackStack ("myFrag1");  //why do we do this? A: So the back button works as the user expects
         ft.commit ();  //don't forget to commit your changes.  It is a transaction after all.
+
 
     btnFrag1.setOnClickListener(new View.OnClickListener() {
         @Override
@@ -92,12 +93,39 @@ private
     }
 
 public void showFrag1() {
-    f1 = (Frag_One) fm.findFragmentByTag("tag1");   //what should we do if f1 doesn't exist anymore?  How do we check and how do we fix?
+
+     if (f1 == null)
+         f1 = new Frag_One();
+
+
     FragmentTransaction ft = fm.beginTransaction ();  //Create a reference to a fragment transaction.
 
-    ft.hide(f2);
-    ft.hide(f3);
-    ft.show(f1);   //why does this not *always* crash?
+    if (fm.findFragmentByTag("tag1") == null) {
+
+        ft.add(R.id.FragLayout, f1, "tag1");
+    }
+
+    if (fm.findFragmentByTag("tag1") != null) {
+        f1 = (Frag_One) fm.findFragmentByTag("tag1");   //what should we do if f1 doesn't exist anymore?  How do we check and how do we fix? A: If it no longer exists, create a new instance of it. Check if it's null via an if statement.
+
+    }
+    // ft.replace(R.id.FragLayout, f1);
+
+    if (f2 != null) {
+        ft.detach(f2);
+    }
+
+    if (f3 != null) {
+        ft.detach(f3);
+    }
+
+    ft.attach(f1);
+    ft.addToBackStack("myFrag1");
+
+
+//    ft.hide(f2);
+//    ft.hide(f3);
+//    ft.show(f1);   //why does this not *always* crash? A: Because f1 always exists and is shown during onCreate
     ft.commit();
 }
 
@@ -107,18 +135,76 @@ public void showFrag1() {
           f2 = new Frag_Two();
 
         FragmentTransaction ft = fm.beginTransaction ();  //Create a reference to a fragment transaction and start the transaction.
-        ft.replace(R.id.FragLayout, f2);
-        ft.addToBackStack ("myFrag2");  //Q: What is the back stack and why do we do this? _______________
-        ft.commit();
+
+        if (fm.findFragmentByTag("tag2") == null) {
+
+            ft.add(R.id.FragLayout, f2, "tag2");
+        }
+
+        if (fm.findFragmentByTag("tag2") != null) {
+            f2 = (Frag_Two) fm.findFragmentByTag("tag2");
+        }
+            // ft.replace(R.id.FragLayout, f2);
+
+            if (f1 != null) {
+                ft.detach(f1);
+            }
+
+            if (f3 != null) {
+                ft.detach(f3);
+            }
+
+            ft.attach(f2);
+            ft.addToBackStack ("myFrag2");  //Q: What is the back stack and why do we do this? A: The back stack keeps track of previous Activities so that the back button works as the user expects it to
+            ft.commit();
+
     }
 
 
     public void showFrag3() {
 
+        if (f3 == null)
+            f3 = new Frag_Three();
+
+
+
+
         FragmentTransaction ft = fm.beginTransaction ();  //Create a reference to a fragment transaction.
-        ft.detach(f1);   //what would happen if f1, f2, or f3 were null?  how would we check and fix this?
-        ft.detach(f2);
-        ft.attach(f3);
-        ft.commit();
+
+        if (fm.findFragmentByTag("tag3") == null) {
+            ft.add(R.id.FragLayout, f3, "tag3");
+        }
+
+        if (fm.findFragmentByTag("tag3") != null) {
+            f3 = (Frag_Three) fm.findFragmentByTag("tag3");
+        }
+
+
+
+            // ft.replace(R.id.FragLayout, f3);
+
+            if (f1 != null) {
+                ft.detach(f1);
+            }
+
+            if (f2 != null) {
+                ft.detach(f2);
+            }
+
+            ft.attach(f3);
+            ft.addToBackStack("myFrag3");
+
+
+//        ft.detach(f1);   //what would happen if f1, f2, or f3 were null?  how would we check and fix this? A: It would crash. Since they are all added in onCreate, they will always exist.
+//        ft.detach(f2);
+//        ft.attach(f3);
+            ft.commit();
+
+
+    }
+
+    @Override
+    public void onBackPressed() {
+        getFragmentManager().popBackStack();
     }
 }
