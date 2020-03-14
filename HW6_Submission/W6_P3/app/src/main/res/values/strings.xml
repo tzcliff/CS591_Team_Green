@@ -1,0 +1,34 @@
+<resources>
+    <string name="app_name">CustomListView_sse</string>
+    <string-array name="episodes">
+        <item>Spock\'s Brain</item>
+        <item>Arena</item>
+        <item>This Side of Paradise</item>
+        <item>Mirror, Mirror</item>
+        <item>Plato\'s Step Children</item>
+        <item>The Naked Time</item>
+        <item>The Trouble With Tribbles</item>
+    </string-array>
+
+    <string-array name="episode_descriptions">
+        <item>Some people in swimsuits steal Spock\'s Brain. Hmm...</item>
+        <item>Captain Kirk fights a plastic 3D Molded lizard.</item>
+        <item>A flower explodes in Spock\'s face and makes him happy. </item>
+        <item>Alternative Universe</item>
+        <item>Captain Kirk and Spock play dress up.</item>
+        <item>Sulu goes nuts.</item>
+        <item>So cute!!</item>
+    </string-array>
+
+    <string-array name="episode_url">
+        <item>https://en.wikipedia.org/wiki/Spock%27s_Brain</item>
+        <item>https://en.wikipedia.org/wiki/Arena_(Star_Trek:_The_Original_Series)</item>
+        <item>https://en.wikipedia.org/wiki/This_Side_of_Paradise_(Star_Trek:_The_Original_Series)</item>
+        <item>https://en.wikipedia.org/wiki/Mirror,_Mirror_(Star_Trek:_The_Original_Series)</item>
+        <item>https://en.wikipedia.org/wiki/Plato%27s_Stepchildren</item>
+        <item>https://en.wikipedia.org/wiki/The_Naked_Time</item>
+        <item>https://en.wikipedia.org/wiki/The_Trouble_with_Tribbles</item>
+    </string-array>
+
+
+</resources>
