@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">HW7_P1</string>
+    <string name="phoneLabelString">Enter an emergency phone number</string>
+    <string name="textLabelString">Enter an emergency text number (they may be the same)</string>
+</resources>
